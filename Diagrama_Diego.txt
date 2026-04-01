@@ -1,0 +1,35 @@
+R1-ubuntu: 
+usuario: root
+pass: ubuntu
+Hace de DHCP-Relay
+Tengo que instalarle el isc-dhcp-relay
+
+4 patas: en 10.2.7.0/24, 172.18.10.0/24, 172.18.20.0/24 y 172.18.20.0/24
+
+El R-DH (Router de Delgado Hernández) enruta también los de la 172.18.0.0/16. Para que todos tengan acceso a internet
+
+
+Tiene el enrutamiento hecho:
+nano /etc/sysctl.conf
+# Uncomment the next line to enable packet forwarding for IPv4
+net.ipv4.ip_forward=1
+
+y luego: sysctl -p
+
+https://gemini.google.com/app/236b219085676a1a
+
+
+
+¿¿¿Aplicar NAT en R1???? AL FINAL NO HIZO FALTA PORQUE CREO QUE YA SABE LA SALIDA. R1 tiene a 10.2.7.1 como ruta fija a Internet
+
+Opción A: Configurar NAT en R1 (La más común)
+
+Esto hará que todo el tráfico de las LANs de la derecha salga hacia la izquierda con la IP de R1 (10.2.7.3). R-DH no necesitará saber nada de las otras redes.
+
+Ejecuta estos comandos en R1-ubuntu:
+
+    Instala las herramientas de iptables (si no las tienes): sudo apt update && sudo apt install iptables-persistent -y
+
+    Aplica la regla de Masquerade (asumiendo que ens18 o la interfaz que sea es la que va hacia vmbr207): sudo iptables -t nat -A POSTROUTING -o [INTERFAZ_HACIA_VMBR207] -j MASQUERADE
+
+        Nota: Sustituye [INTERFAZ_HACIA_VMBR207] por el nombre real (ej. eth0 o ens18). Puedes ver el nombre con ip a.

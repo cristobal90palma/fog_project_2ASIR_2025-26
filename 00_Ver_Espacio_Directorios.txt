@@ -1,0 +1,18 @@
+Opción 1: Ver tamaño de cada directorio (más legible)
+
+
+du -sh /images/*
+
+
+
+Opción 4: Ver también el contenido interno (más detalle)
+bash
+
+du -sh /images/* && echo "---" && du -sh /images/*/*
+
+
+Si quieres ver también el contenido de cada imagen:
+bash
+
+du -sh /images/W11_Bien_Hecha_UEFI_02/*
+du -sh /images/W11_UEFI_Plantilla/*

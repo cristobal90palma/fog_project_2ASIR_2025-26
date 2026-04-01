@@ -1,0 +1,42 @@
+Desactivar actualizaciones automáticas en Ubuntu
+https://linuxconfig.org/disable-automatic-updates-on-ubuntu-22-04-jammy-jellyfish-linux
+
+sudo systemctl disable --now unattended-upgrades
+
+Instalar FOG Project
+https://docs.fogproject.org/en/latest/installation/server/install-fog-server/
+
+Prerequisite¶
+
+The preferred method of getting FOG is via Git.
+Debian based¶
+
+sudo -i
+apt-get -y install git
+
+
+Now that git is installed, you should be able to clone the FOG
+repository. Generally we recommend to put the repository inside of /root
+but if you've done this sort of thing before, put it wherever you want.
+Here's how you clone the FOG repository/code to your local machine:
+
+https://github.com/FOGProject/fogproject
+
+
+git clone https://github.com/fogproject/fogproject.git fogproject-stable
+
+
+
+    Run the install script as root and follow all prompts accordingly
+
+sudo -i
+cd /path/to/fogproject-stable/bin
+./installfog.sh
+
+    You should now be ready to use FOG
+
+
+http://10.2.7.5/fog/management
+
+The default login for the FOG Project web management interface is usually username
+fog and password password.

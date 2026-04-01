@@ -1,0 +1,96 @@
+ERROR:
+Cuando arrancas el equipo para hacer captura de imagen
+
+"Attempting to check in… Failed"
+
+
+tail -f /var/log/apache2/error.log
+
+[Mon Mar 30 08:14:47.630777 2026] [proxy_fcgi:error] [pid 1165] [client 10.2.7.201:49364] AH01071: Got error 'PHP message: PHP Fatal error:  Uncaught ValueError: min(): Argument #1 ($value) must contain at least one element in /var/www/fog/lib/fog/image.class.php:396\nStack trace:\n#0 /var/www/fog/lib/fog/image.class.php(396): min()\n#1 /var/www/fog/lib/reg-task/taskqueue.class.php(112): Image->getStorageGroup()\n#2 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#3 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 396'
+[Mon Mar 30 08:14:52.772558 2026] [proxy_fcgi:error] [pid 2504] [client 10.2.7.201:49378] AH01071: Got error 'PHP message: PHP Fatal error:  Uncaught ValueError: min(): Argument #1 ($value) must contain at least one element in /var/www/fog/lib/fog/image.class.php:396\nStack trace:\n#0 /var/www/fog/lib/fog/image.class.php(396): min()\n#1 /var/www/fog/lib/reg-task/taskqueue.class.php(112): Image->getStorageGroup()\n#2 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#3 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 396'
+[Mon Mar 30 08:14:57.907863 2026] [proxy_fcgi:error] [pid 1161] [client 10.2.7.201:58500] AH01071: Got error 'PHP message: PHP Fatal error:  Uncaught ValueError: min(): Argument #1 ($value) must contain at least one element in /var/www/fog/lib/fog/image.class.php:396\nStack trace:\n#0 /var/www/fog/lib/fog/image.class.php(396): min()\n#1 /var/www/fog/lib/reg-task/taskqueue.class.php(112): Image->getStorageGroup()\n#2 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#3 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 396'
+[Mon Mar 30 08:15:03.057863 2026] [proxy_fcgi:error] [pid 2470] [client 10.2.7.201:58502] AH01071: Got error 'PHP message: PHP Fatal error:  Uncaught ValueError: min(): Argument #1 ($value) must contain at least one element in /var/www/fog/lib/fog/image.class.php:396\nStack trace:\n#0 /var/www/fog/lib/fog/image.class.php(396): min()\n#1 /var/www/fog/lib/reg-task/taskqueue.class.php(112): Image->getStorageGroup()\n#2 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#3 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 396'
+[Mon Mar 30 08:24:43.849328 2026] [proxy_fcgi:error] [pid 1151] [client 10.8.3.37:43363] AH01071: Got error 'PHP message: PHP Warning:  array_sum(): Addition is not supported on type string in /var/www/fog/lib/pages/imagemanagementpage.class.php on line 251', referer: http://10.2.7.5/fog/management/index.php?node=image
+[Mon Mar 30 08:25:27.971675 2026] [proxy_fcgi:error] [pid 1147] [client 10.8.3.37:43379] AH01071: Got error 'PHP message: PHP Warning:  array_sum(): Addition is not supported on type string in /var/www/fog/lib/pages/imagemanagementpage.class.php on line 251', referer: http://10.2.7.5/fog/management/index.php?node=image&sub=edit&id=1
+[Mon Mar 30 08:25:33.333187 2026] [proxy_fcgi:error] [pid 1165] [client 10.8.3.37:43384] AH01071: Got error 'PHP message: PHP Warning:  array_sum(): Addition is not supported on type string in /var/www/fog/lib/pages/imagemanagementpage.class.php on line 251', referer: http://10.2.7.5/fog/management/index.php?node=image&sub=list
+
+
+
+Posible solución:
+https://forums.fogproject.org/topic/18092/clients-booting-into-fog-are-met-with-attempting-to-check-in-failed/6
+
+
+
+cd /root/fogproject-stable/
+git fetch --all
+git checkout working-1.6
+cd bin
+./installfog.sh
+
+
+Cuando llegas a este punto:
+
+http://10.2.7.5/fog/management/
+
+Para actualizar la database. Si usas el navegador de siempre puede que te de fallos.
+Usa otro o limpia la caché.
+
+
+
+
+ * Setup complete
+
+   You can now login to the FOG Management Portal using
+   the information listed below.  The login information
+   is only if this is the first install.
+
+   This can be done by opening a web browser and going to:
+
+   http://10.2.7.5/fog/management
+
+   Default User Information
+   Username: fog
+   Password: password
+
+ * Changed configurations:
+
+   The FOG installer changed configuration files and created the
+   following backup files from your original files:
+   * /etc/apache2/sites-available/001-fog.conf <=> /etc/apache2/sites-available/001-fog.conf.1774860653
+   * /etc/dhcp/dhcpd.conf <=> /etc/dhcp/dhcpd.conf.1774860653
+
+root@2asircristobal:~/fogproject-stable/bin#
+
+
+CUIDADO, CREO QUE RESETEA EL ARCHIVO DE CONFIGURACIÓN DE DHCP --> SOLO dhcpd.conf
+
+
+
+
+
+
+
+ line 84'
+[Mon Mar 30 09:04:49.610636 2026] [proxy_fcgi:error] [pid 11917] [client 10.2.7.201:41548] AH01071: Got error 'PHP message: PHP Warning:  Undefined array key "ngmID" in /var/www/fog/lib/router/route.class.php on line 2512; PHP message: PHP Warning:  Undefined array key "ngmID" in /var/www/fog/lib/router/route.class.php on line 2512; PHP message: PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, string given in /var/www/fog/lib/fog/image.class.php:325\nStack trace:\n#0 /var/www/fog/lib/reg-task/taskqueue.class.php(91): Image->getStorageGroup()\n#1 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#2 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 325'
+[Mon Mar 30 09:04:55.319204 2026] [proxy_fcgi:error] [pid 11916] [client 10.2.7.201:41564] AH01071: Got error 'PHP message: PHP Warning:  Undefined array key "ngmID" in /var/www/fog/lib/router/route.class.php on line 2512; PHP message: PHP Warning:  Undefined array key "ngmID" in /var/www/fog/lib/router/route.class.php on line 2512; PHP message: PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, string given in /var/www/fog/lib/fog/image.class.php:325\nStack trace:\n#0 /var/www/fog/lib/reg-task/taskqueue.class.php(91): Image->getStorageGroup()\n#1 /var/www/fog/service/Pre_Stage1.php(24): TaskQueue->checkIn()\n#2 {main}\n  thrown in /var/www/fog/lib/fog/image.class.php on line 325'
+[Mon Mar 30 09:04:55.963478 2026] [proxy_fcgi:error] [pid 13965] [client 10.2.7.5:37822] AH01071: Got error 'PHP message: PHP Warning:  session_start(): open(/var/lib/php/sessions/sess_ld2ui0j3selk30bbero5r26653, O_RDWR) failed: Permission denied (13) in /var/www/fog/commons/init.php on line 84; PHP message: PHP Warning:  session_start(): Failed to read session data: files (path: /var/lib/php/sessions) in /var/www/fog/commons/init.php on line 84'
+[Mon Mar 30 09:04:56.013022 2026] [proxy_fcgi:error] [pid 11936] [client 10.2.7.5:37832] AH01071: Got error 'PHP message: PHP Warning:  session_start(): open(/var/lib/php/sessions/sess_ld2ui0j3selk30bbero5r26653, O_RDWR) failed: Permission denied (13) in /var/www/fog/commons/init.php on line 84; PHP message: PHP Warning:  session_start(): Failed to read session data: files (path: /var/lib/php/sessions) in /var/www/fog/commons/init.php on line 84'
+[Mon Mar 30 09:04:56.085981 2026] [proxy_fcgi:error] [pid 14279] [client 10.2.7.5:37844] AH01071: Got error 'PHP message: PHP Warning:  session_start(): open(/var/lib/php/sessions/sess_ld2ui0j3selk30bbero5r26653, O_RDWR) failed: Permission denied (13) in /var/www/fog/commons/init.php on line 84; PHP message: PHP Warning:  session_start(): Failed to read session data: files (path: /var/lib/php/sessions) in /var/www/fog/commons/init.php on line 84'
+[Mon Mar 30 09:04:56.133480 2026] [proxy_fcgi:error] [pid 11917] [client 10.2.7.5:37848] AH01071: Got error 'PHP message: PHP Warning:  session_start(): open(/var/lib/php/sessions/sess_ld2ui0j3selk30bbero5r26653, O_RDWR) failed: Permission denied (13) in /var/www/fog/commons/init.php on line 84; PHP message: PHP Warning:  session_start(): Failed to read session data: files (path: /var/lib/php/sessions) in /var/www/fog/commons/init.php on line 84'
+
+
+
+https://gemini.google.com/app/10a51b2ec3cbc2b6
+
+
+1. El Error de Permisos (Permission denied en line 84)
+
+Este es el motivo por el cual Firefox (y quizás el check-in) fallan. PHP no tiene permiso para escribir las sesiones en el disco.
+Ejecuta este comando en tu servidor FOG:
+Bash
+
+sudo chown -R www-data:www-data /var/lib/php/sessions
+sudo chmod -R 777 /var/lib/php/sessions
+
+
+

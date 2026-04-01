@@ -1,0 +1,63 @@
+# Don't function as a DNS server:
+port=0
+
+# Log lots of extra information about DHCP transactions.
+log-dhcp
+
+# Set the root directory for files available via FTP.
+tftp-root=/tftpboot
+
+# Deshabilitar re-uso de campos para evitar errores en clientes antiguos
+dhcp-no-override
+
+# --- CLASIFICACIÓN DE ARQUITECTURAS (VENDOR CLASS) ---
+# BIOS Legacy
+dhcp-vendorclass=BIOS,PXEClient:Arch:00000
+
+# UEFI 32-bit
+dhcp-vendorclass=UEFI32,PXEClient:Arch:00006
+dhcp-vendorclass=UEFI32_alt,PXEClient:Arch:00002
+
+# UEFI 64-bit (Estándar y variantes)
+dhcp-vendorclass=UEFI,PXEClient:Arch:00007
+dhcp-vendorclass=UEFI64,PXEClient:Arch:00009
+dhcp-vendorclass=UEFI64_alt,PXEClient:Arch:00008
+
+# ARM64
+dhcp-vendorclass=ARM64,PXEClient:Arch:00011
+
+# Casos Especiales: Microsoft Surface Pro 4
+dhcp-vendorclass=SURFACE,PXEClient:Arch:00007:UNDI:003016
+
+# Casos Especiales: Apple Intel Netboot
+dhcp-vendorclass=APPLE,AAPLBSDPC/i386
+
+# --- ASIGNACIÓN DE ARCHIVOS DE ARRANQUE ---
+
+# Booteo para BIOS (Legacy)
+dhcp-boot=net:BIOS,undionly.kpxe,,10.2.7.5
+
+# Booteo para UEFI 32-bit (Usando snponly para mayor compatibilidad)
+dhcp-boot=net:UEFI32,i386-efi/snponly.efi,,10.2.7.5
+dhcp-boot=net:UEFI32_alt,i386-efi/snponly.efi,,10.2.7.5
+
+# Booteo para UEFI 64-bit y Surface
+dhcp-boot=net:UEFI,snponly.efi,,10.2.7.5
+dhcp-boot=net:UEFI64,snponly.efi,,10.2.7.5
+dhcp-boot=net:UEFI64_alt,snponly.efi,,10.2.7.5
+dhcp-boot=net:SURFACE,snponly.efi,,10.2.7.5
+
+# Booteo para ARM64
+dhcp-boot=net:ARM64,arm64-efi/snponly.efi,,10.2.7.5
+
+# Booteo para Apple (Requiere snponly.efi)
+dhcp-boot=net:APPLE,snponly.efi,,10.2.7.5
+
+# --- MENÚ PXE (Para interacción visual) ---
+pxe-prompt="Booting FOG Client", 1
+pxe-service=X86PC, "Boot to FOG (Legacy)", undionly.kpxe
+pxe-service=X86-64_EFI, "Boot to FOG (UEFI)", snponly.efi
+pxe-service=BC_EFI, "Boot to FOG (UEFI BC)", snponly.efi
+
+# Configuración Proxy DHCP para la red local
+dhcp-range=10.2.7.5,proxy

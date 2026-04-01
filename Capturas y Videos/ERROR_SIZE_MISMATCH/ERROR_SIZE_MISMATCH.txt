@@ -1,0 +1,129 @@
+La imagen se capturó como Single Disk Resizable
+
+
+
+Enabling write cache........................Enabled
+
+    Using Hard Disk: /dev/sda
+
+    Preparing Partition layout
+
+    Erasing current MBR/GPT Tables...............Done
+
+    Restoring Partition Tables (GPT)............Failed
+    Creating new GPT entries in memory.
+    Warning! Current disk size doesn't match that of the backup!
+    Adjusting sizes to match, but subsequent problems are possible!
+
+Warning! Secondary partition table overlaps the last partition by
+125825057 blocks!
+You will need to delete this partition or resize it in another utility.
+
+Problem: partition 3 is too big for the disk.
+
+Problem: partition 4 is too big for the disk.
+Aborting write operation!
+Aborting write of new partition table.
+Find the detailed error message above this line. Use Shift-PageUp to scroll upwards.
+##############################################################################
+An error has been detected!
+
+##############################################################################
+Init Version: 20251221
+Error trying to restore GPT partition tables (restorePartitionTablesAndBootLoaders)
+Args Passed: /dev/sda 1 /images/W11_UEFI_Plantilla 9 all
+CMD Tried: sgdisk -gl /images/W11_UEFI_Plantilla/d1.mbr /dev/sda
+Exit returned code: 4
+
+Kernel variables and settings:
+bzImage loglevel=4 initrd=init.xz root=/dev/ram0 rw ramdisk_size=275000 web=http://10.2.7.5/fog/ consoleblank=0 rootfstype=ext4 nvme_core.default_ps_max_latency_us=0 setmacto=bc:24:11:9e:8a:c5 mac=bc:24:11:9e:8a:c5 ftp=10.2.7.5 storage=10.2.7.5:/images/ storageip=10.2.7.5 osid=9 irqpoll hostname=W11_Cliente_02 chkdsk=0 img=W11_UEFI_Plantilla imgType=n imgPartitionType=all imgid=1 imgFormat=5 PIGZ_COMP=-6 hostearly=1 type=down
+##############################################################################
+Computer will reboot in 1 minute
+
+##############################################################################
+
+https://forums.fogproject.org/topic/13302/error-trying-to-restore-gpt-partition-tables-exit-returned-code-4/13
+
+https://gemini.google.com/app/bf855e14ef9c813c
+
+
+Para ver el log que realmente importa, haz esto en tu terminal de servidor:
+
+    Ve a la carpeta de la imagen que falla:
+    Bash
+
+    cd /images/W11_UEFI_Plantilla/
+
+    Mira el contenido del archivo de particiones:
+    Bash
+
+    cat d1.partitions
+
+¿Qué buscar en ese archivo?
+Suma los valores de size. Si el total de sectores es mayor que los sectores que tiene tu disco físico de destino, FOG abortará siempre.
+Lo que yo haría ahora mismo:
+
+Dado que el foro decía que el error 4 es casi siempre por un problema de tamaño en el archivo .mbr o .partitions:
+
+    ¿La imagen fue capturada de un disco más grande que el que estás usando ahora? (Ejemplo: captura de un SSD de 500GB para desplegar en uno de 240GB).
+
+    Si es así, el error de PHP que ves (array_sum) refuerza la idea de que FOG se está liando con los cálculos de tamaño de esa imagen en particular.
+
+¿Puedes hacerme un cat /images/W11_UEFI_Plantilla/d1.partitions y pegarme aquí el resultado? Ahí veremos los números exactos que están rompiendo el proceso.
+
+
+
+
+¡Bingo! Aquí tenemos la prueba matemática del error. El archivo d1.partitions nos dice exactamente por qué falla el despliegue.
+
+Hagamos una suma rápida de los sectores que esta imagen exige para poder escribirse en un disco:
+
+    Inicio de la última partición (sda4): sector 250,030,080
+
+    Tamaño de la última partición (sda4): 1,624,064 sectores.
+
+    Sector final requerido: 250,030,080+1,624,064=251,654,144
+
+El problema:
+
+Tu imagen requiere que el disco tenga, como mínimo, 251,654,144 sectores (unos 120 GB reales).
+
+Si el disco duro de la máquina donde estás intentando desplegar tiene menos sectores que esos (por ejemplo, un disco de 120GB de otro fabricante que tenga unos pocos MB menos, o un disco de 110GB), sgdisk dará el Error Code 4 porque la partición 4 "se sale" del borde físico del disco.
+
+
+
+\\\\\\\\\\\\\\\\\\\\
+
+Le he puesto un disco duro más grande (resize en el Proxmox) y ya me lo acepta.
+
+Creo que a partir de ahora pasare directamente a la versión Working 1.6.
+
+
+
+Se le puso un disco de 140 cuando la imagen se tomo de uno de 120. Se quedan 20 gb sin formatear. Se adjunta FOTO "ScreenShot02714"
+
+Se adjunta foto del que sale bien --> "ScreenShot02715"
+
+
+He creado otra VM UEFI con todo desde el principio (EFI Disk y TMP 2.0)
+Parece que ahora está bien hecha. --> "ScreenShot02717"
+
+Además, se ve en el menú de FOG --> Imagen  --> Image Size On Client --> "ScreenShot02718"
+
+Fijarse en "d1.minimum.partitions" y "d1.partitions"
+
+en d1.minimum.partitions nos debe de salir el tamaño mínimo que pueden tener las particiones
+
+root@2asircristobal:/images/W11_Bien_Hecha_UEFI_02# ls -l
+total 7924340
+-rwxrwxr-x 1 fogproject fogproject          6 mar 30 15:20 d1.fixed_size_partitions
+-rwxrwxr-x 1 fogproject fogproject    1048576 mar 30 15:21 d1.mbr
+-rwxrwxr-x 1 fogproject fogproject        849 mar 30 15:21 d1.minimum.partitions
+-rwxrwxr-x 1 fogproject fogproject         15 mar 30 15:20 d1.original.fstypes
+-rwxrwxr-x 1 fogproject fogproject          0 mar 30 15:20 d1.original.swapuuids
+-rwxrwxr-x 1 fogproject fogproject   14776663 mar 30 15:21 d1p1.img
+-rwxrwxr-x 1 fogproject fogproject        767 mar 30 15:21 d1p2.img
+-rwxrwxr-x 1 fogproject fogproject 7419088934 mar 30 15:27 d1p3.img
+-rwxrwxr-x 1 fogproject fogproject  679570812 mar 30 15:28 d1p4.img
+-rwxrwxr-x 1 fogproject fogproject        849 mar 30 15:20 d1.partitions
+-rwxrwxr-x 1 fogproject fogproject        849 mar 30 15:21 d1.shrunken.partitions

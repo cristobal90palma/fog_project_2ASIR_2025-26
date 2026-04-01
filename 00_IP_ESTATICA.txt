@@ -1,0 +1,13 @@
+network:
+  version: 2
+  ethernets:
+    ens18:
+      addresses:
+        - 10.2.7.5/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 10.2.7.1
+      nameservers:
+        addresses:
+          - 172.16.200.1
+          - 8.8.8.8

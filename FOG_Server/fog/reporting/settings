@@ -1,0 +1,5 @@
+day_of_week=2
+hour_of_day=1
+minute_of_hour=6
+reporting_log=/var/log/fog/reporting.log
+user_to_run_as=root

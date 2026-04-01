@@ -1,0 +1,176 @@
+root@R1-ubuntu:~# history
+    1  ip a
+    2  ping 10.2.7.1
+    3  ping x.uk
+    4  nano /etc/sysctl.conf
+    5  sysctl -p
+    6  history
+    7  ip a
+    8  history
+    9  nano /etc/sysctl.conf
+   10  history
+   11  ip r
+   12  ping 172.16.200.1
+   13  tracepath 172.16.200.1
+   14  ip r
+   15  ping 172.18.30.254
+   16  ufw
+   17  ufw status
+   18  cat /proc/sys/net/ipv4/ip_forward
+   19  ip r
+   20  tcpdump
+   21  ip r
+   22  ip a
+   23  tcpdump -i eth237
+   24  man tcpdump q
+   25  tcpdump -vvv
+   26  systemctl status ssh
+   27  reboot
+   28  ip a
+   29  ip r
+   30  tcpdump -vvv
+   31  history
+   
+   
+   
+   
+   
+\\\\\\\\\\\\\\\\
+
+ip a
+
+
+root@R1-ubuntu:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: eth207@if3059: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether bc:24:11:5d:7d:b0 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.2.7.3/24 brd 10.2.7.255 scope global eth207
+       valid_lft forever preferred_lft forever
+    inet6 fe80::be24:11ff:fe5d:7db0/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth217@if3063: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether bc:24:11:79:7b:5e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.18.10.1/24 brd 172.18.10.255 scope global eth217
+       valid_lft forever preferred_lft forever
+    inet6 fe80::be24:11ff:fe79:7b5e/64 scope link
+       valid_lft forever preferred_lft forever
+4: eth227@if3067: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether bc:24:11:8f:87:da brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.18.20.1/24 brd 172.18.20.255 scope global eth227
+       valid_lft forever preferred_lft forever
+    inet6 fe80::be24:11ff:fe8f:87da/64 scope link
+       valid_lft forever preferred_lft forever
+5: eth237@if3071: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether bc:24:11:7b:ea:7b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.18.30.1/24 brd 172.18.30.255 scope global eth237
+       valid_lft forever preferred_lft forever
+    inet6 fe80::be24:11ff:fe7b:ea7b/64 scope link
+       valid_lft forever preferred_lft forever
+root@R1-ubuntu:~#
+
+
+
+
+
+
+
+\\\\\\\\\\\\\\
+
+ip r
+
+
+root@R1-ubuntu:~# ip r
+default via 10.2.7.1 dev eth207 proto static
+10.2.7.0/24 dev eth207 proto kernel scope link src 10.2.7.3
+172.18.10.0/24 dev eth217 proto kernel scope link src 172.18.10.1
+172.18.20.0/24 dev eth227 proto kernel scope link src 172.18.20.1
+172.18.30.0/24 dev eth237 proto kernel scope link src 172.18.30.1
+
+
+
+\\\\\\\\\\\\\\\
+
+root@R1-ubuntu:~# tracepath 172.16.200.1
+ 1?: [LOCALHOST]                      pmtu 1500
+ 1:  10.2.7.1                                              0.125ms
+ 1:  10.2.7.1                                              0.102ms
+ 2:  172.16.200.1                                          0.317ms reached
+     Resume: pmtu 1500 hops 2 back 2
+	 
+	 
+	 
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Instalación de isc-dhcp-relay:
+	 
+	DHC Server: 10.2.7.5
+
+
+                                                                                                                                         │
+    │ Interfaces the DHCP relay should listen on:   eth207 eth217 eth227 eth237
+	
+	
+	Options: No pongas nada
+	
+	
+	
+root@R1-ubuntu:~# systemctl status isc-dhcp-relay
+* isc-dhcp-relay.service - ISC DHCP IPv4 relay
+     Loaded: loaded (/usr/lib/systemd/system/isc-dhcp-relay.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-02-14 16:37:24 UTC; 16s ago
+       Docs: man:dhcrelay(8)
+   Main PID: 4536 (dhcrelay)
+      Tasks: 1 (limit: 618389)
+     Memory: 952.0K (peak: 1.1M)
+        CPU: 11ms
+     CGroup: /system.slice/isc-dhcp-relay.service
+             `-4536 /usr/sbin/dhcrelay -d -4 -i eth207 -i eth217 -i eth227 -i eth237 10.2.7.5
+
+Feb 14 16:37:24 R1-ubuntu dhcrelay[4536]: Listening on LPF/eth217/bc:24:11:79:7b:5e
+Feb 14 16:37:24 R1-ubuntu sh[4536]: Listening on LPF/eth217/bc:24:11:79:7b:5e
+Feb 14 16:37:24 R1-ubuntu sh[4536]: Sending on   LPF/eth217/bc:24:11:79:7b:5e
+Feb 14 16:37:24 R1-ubuntu dhcrelay[4536]: Sending on   LPF/eth217/bc:24:11:79:7b:5e
+Feb 14 16:37:24 R1-ubuntu dhcrelay[4536]: Listening on LPF/eth207/bc:24:11:5d:7d:b0
+Feb 14 16:37:24 R1-ubuntu sh[4536]: Listening on LPF/eth207/bc:24:11:5d:7d:b0
+Feb 14 16:37:24 R1-ubuntu sh[4536]: Sending on   LPF/eth207/bc:24:11:5d:7d:b0
+Feb 14 16:37:24 R1-ubuntu sh[4536]: Sending on   Socket/fallback
+Feb 14 16:37:24 R1-ubuntu dhcrelay[4536]: Sending on   LPF/eth207/bc:24:11:5d:7d:b0
+Feb 14 16:37:24 R1-ubuntu dhcrelay[4536]: Sending on   Socket/fallback
+
+
+nano --> /etc/default/isc-dhcp-relay
+
+# Defaults for isc-dhcp-relay initscript
+# sourced by /etc/init.d/isc-dhcp-relay
+# installed at /etc/default/isc-dhcp-relay by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# What servers should the DHCP relay forward requests to?
+SERVERS="10.2.7.5"
+
+# On what interfaces should the DHCP relay (dhrelay) serve DHCP requests?
+INTERFACES="eth207 eth217 eth227 eth237"
+
+# Additional options that are passed to the DHCP relay daemon?
+OPTIONS=""
+
+
+Activalo por si acaso, pero a mi no me hizo falta:
+
+sudo systemctl enable isc-dhcp-relay
+
+
+
+Si activamos UFW:
+
+sudo ufw allow in on eth217 to any port 67 proto udp
+sudo ufw allow in on eth227 to any port 67 proto udp
+sudo ufw allow in on eth237 to any port 67 proto udp

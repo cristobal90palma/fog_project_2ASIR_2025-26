@@ -1,0 +1,44 @@
+Desinstalación de isc-dhcp-server
+Instalacion de dhcp después de instalado FOG
+uso de authoritative en el archivo de DHCP
+https://chatgpt.com/c/698e4c96-ccf4-8391-b183-863927b35090
+DHCP-Install-Authoritative.pdf
+
+
+\\\\\\\\\\\\\\\
+
+Activar servicio DHCP en FOG: Muy vago.
+https://chatgpt.com/c/698e1242-bf18-8330-838c-7e2772a09a9f
+
+
+\\\\\\\\\\
+
+Configuración de archivo dhcpd.conf para FOG
+https://gemini.google.com/app/93bee6632b1cd22a
+
+
+\\\\\\\\\\\\\\
+
+Sobre la configuración inicial de R1-ubuntu y algunos comandos por Diego:
+https://gemini.google.com/app/5e73a67e632cd278
+
+
+
+\\\\\\\\ 
+
+Sobre el diagrama que me mandó diego:
+
+https://gemini.google.com/app/236b219085676a1a
+
+
+
+
+Debes deshabilitar Secure Boot en equipos UEFI: Si no, se quedará pillados
+https://forum.proxmox.com/threads/proxmox8-virtual-machine-secure-boot-disabled.154645/
+
+
+
+He intentado poner dnsmasq, pero ha sido un fracaso. Dice que "nothing to boot from":
+Creo que al final he podido hacerlo
+
+https://gemini.google.com/app/93bee6632b1cd22a

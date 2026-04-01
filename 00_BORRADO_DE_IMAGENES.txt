@@ -1,0 +1,3 @@
+https://forums.fogproject.org/topic/14984/deleting-an-image-in-the-web-ui-is-not-removing-it-from-the-server/3
+
+Pero no funciona muy bien.

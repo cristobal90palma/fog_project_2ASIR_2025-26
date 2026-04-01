@@ -1,0 +1,5 @@
+[v3_ca]
+subjectAltName = @alt_names
+[alt_names]
+IP.1 = 10.2.7.5
+DNS.1 = fogserver_proxmox

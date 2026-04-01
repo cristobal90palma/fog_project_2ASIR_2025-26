@@ -1,0 +1,7 @@
+https://gemini.google.com/app/93bee6632b1cd22a
+
+nano /opt/fog/.fogsettings
+
+nano /etc/default/isc-dhcp-server
+
+nano /etc/dhcp/dhcpd.conf

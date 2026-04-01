@@ -1,0 +1,125 @@
+Instalación y configuración de dnsmasq en el servidor FOG (10.2.7.5)
+
+Motivo: permitir que equipos puedan arrancar por PXE en subnets
+donde el servidor DHCP de FOG no opera. Ya existe otro servidor DHCP
+en 10.2.7.0/24 y necesitamos que estos equipos puedan conectarse por PXE
+al FOG.
+
+Sobre como funciona dnsmasq: https://wiki.fogproject.org/wiki/index.php?title=ProxyDHCP_with_dnsmasq
+
+Sobre la configuración que he seguido: https://forums.fogproject.org/topic/12796/installing-dnsmasq-on-your-fog-server
+
+
+En el mismo servidor FOG (10.2.7.5)
+
+1. Instalamos dnsmasq:
+
+apt update
+apt install dnsmasq -y
+
+2. Configuración del archivo Proxy (ltsp.conf)
+
+nano /etc/dnsmasq.d/ltsp.conf
+
+
+# Don't function as a DNS server:
+port=0
+
+# Log lots of extra information about DHCP transactions.
+log-dhcp
+
+# Set the root directory for files available via FTP.
+tftp-root=/tftpboot
+
+# The boot filename, Server name, Server Ip Address
+dhcp-boot=undionly.kpxe,,<fog_server_IP>
+
+# Disable re-use of the DHCP servername and filename fields as extra
+# option space. That's to avoid confusing some old or broken DHCP clients.
+dhcp-no-override
+
+# inspect the vendor class string and match the text to set the tag
+dhcp-vendorclass=BIOS,PXEClient:Arch:00000
+dhcp-vendorclass=UEFI32,PXEClient:Arch:00006
+dhcp-vendorclass=UEFI,PXEClient:Arch:00007
+dhcp-vendorclass=UEFI64,PXEClient:Arch:00009
+
+# Set the boot file name based on the matching tag from the vendor class (above)
+dhcp-boot=net:UEFI32,i386-efi/ipxe.efi,,<fog_server_IP>
+dhcp-boot=net:UEFI,ipxe.efi,,<fog_server_IP>
+dhcp-boot=net:UEFI64,ipxe.efi,,<fog_server_IP>
+
+# PXE menu.  The first part is the text displayed to the user.  The second is the timeout, in seconds.
+pxe-prompt="Booting FOG Client", 1
+
+# The known types are x86PC, PC98, IA64_EFI, Alpha, Arc_x86,
+# Intel_Lean_Client, IA32_EFI, BC_EFI, Xscale_EFI and X86-64_EFI
+# This option is first and will be the default if there is no input from the user.
+pxe-service=X86PC, "Boot to FOG", undionly.kpxe
+pxe-service=X86-64_EFI, "Boot to FOG UEFI", ipxe.efi
+pxe-service=BC_EFI, "Boot to FOG UEFI PXE-BC", ipxe.efi
+
+dhcp-range=<fog_server_IP>,proxy
+
+
+
+\\\\\\\\\\\\\\\
+
+
+3. Ajuste de convivencia de puertos
+
+Para evitar el error Address already in use (ya que isc-dhcp-server también
+ está corriendo para tus otras subredes), debemos forzar el amarre de interfaces:
+ 
+nano /etc/dnsmasq.conf
+
+Busca y descomenta (o añade) la línea:
+bind-interfaces
+
+
+
+4. Aplicación de cambios y comprobación
+
+Es fundamental reiniciar los servicios en el orden correcto para que compartan el puerto 67:
+
+# Verificar que no hay errores de sintaxis
+dnsmasq --test
+
+# Reiniciar en orden
+systemctl stop isc-dhcp-server dnsmasq
+systemctl start dnsmasq
+systemctl start isc-dhcp-server
+
+
+# Activar para el inicio
+
+sudo systemctl enable dnsmasq
+
+
+
+\\\\\\\\\\\\\\\\\\\\\
+
+EXTRAS:
+
+Verificación de funcionamiento
+
+    En el Cliente (Legacy o UEFI): Al arrancar por red, debería recibir la IP del router y luego mostrar el mensaje Booting FOG Client.
+
+    En el Servidor: Puedes ver en tiempo real cómo el Proxy responde a las peticiones con este comando:
+    Bash
+
+    tail -f /var/log/syslog | grep dnsmasq-dhcp
+	
+
+Resumen de puertos necesarios (UFW)
+
+Si activas el firewall, asegúrate de tener abiertos:
+
+    67, 4011 / UDP (DHCP y ProxyDHCP)
+
+    69 / UDP (TFTP para descargar el menú)
+
+    80 / TCP (HTTP para descargar el kernel de FOG)
+	
+	
+https://gemini.google.com/app/93bee6632b1cd22a

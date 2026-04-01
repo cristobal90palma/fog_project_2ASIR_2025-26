@@ -1,0 +1,3 @@
+https://www.reddit.com/r/SysAdminBlogs/comments/1oce01l/skip_the_microsoft_account_in_windows_11_25h2/
+
+Shift F10 during setup for command prompt then type start ms-cxh:localonly 

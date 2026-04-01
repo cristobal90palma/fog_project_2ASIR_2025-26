@@ -1,0 +1,64 @@
+[02-15-26 9:03:36 pm] 
+==================================
+===        ====    =====      ====
+===  =========  ==  ===   ==   ===
+===  ========  ====  ==  ====  ===
+===  ========  ====  ==  =========
+===      ====  ====  ==  =========
+===  ========  ====  ==  ===   ===
+===  ========  ====  ==  ====  ===
+===  =========  ==  ===   ==   ===
+===  ==========    =====      ====
+==================================
+===== Free Opensource Ghost ======
+==================================
+============ Credits =============
+= https://fogproject.org/Credits =
+==================================
+== Released under GPL Version 3 ==
+==================================
+
+
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 2asircristobal
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 10.2.7.5
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.0.1
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.1.1
+[02-15-26 9:03:36 pm]  * Starting SnapinReplicator Service
+[02-15-26 9:03:36 pm]  * Checking for new items every 600 seconds
+[02-15-26 9:03:36 pm]  * Starting service loop
+[02-15-26 9:03:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:03:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:03:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:03:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:03:36 pm]  | There is nothing to replicate.
+[02-15-26 9:03:36 pm]  | Please physically associate snapins to a storage group.
+[02-15-26 9:13:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:13:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:13:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:13:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:13:36 pm]  | There is nothing to replicate.
+[02-15-26 9:13:36 pm]  | Please physically associate snapins to a storage group.
+[02-15-26 9:23:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:23:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:23:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:23:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:23:36 pm]  | There is nothing to replicate.
+[02-15-26 9:23:36 pm]  | Please physically associate snapins to a storage group.
+[02-15-26 9:33:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:33:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:33:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:33:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:33:36 pm]  | There is nothing to replicate.
+[02-15-26 9:33:36 pm]  | Please physically associate snapins to a storage group.
+[02-15-26 9:43:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:43:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:43:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:43:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:43:36 pm]  | There is nothing to replicate.
+[02-15-26 9:43:36 pm]  | Please physically associate snapins to a storage group.
+[02-15-26 9:53:36 pm]  * Starting Snapin Replication.
+[02-15-26 9:53:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:53:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:53:36 pm]  * Attempting to perform Group -> Group snapin replication.
+[02-15-26 9:53:36 pm]  | There is nothing to replicate.
+[02-15-26 9:53:36 pm]  | Please physically associate snapins to a storage group.

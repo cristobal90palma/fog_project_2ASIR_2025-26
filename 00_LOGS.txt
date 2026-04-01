@@ -1,0 +1,31 @@
+root@2asircristobal:/opt/fog/log# php -v
+PHP 8.3.6 (cli) (built: Mar 20 2026 02:32:55) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.3.6, Copyright (c) Zend Technologies
+    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies
+root@2asircristobal:/opt/fog/log# cat /var/www/html/fog/lib/fog/system.class.php | grep FOG_VERSION
+        define('FOG_VERSION', '1.5.10.1815');
+root@2asircristobal:/opt/fog/log#
+
+
+
+	root@2asircristobal:/home/cristobal# ls /etc/php/
+8.3
+
+
+root@2asircristobal:/home/cristobal# ls -l /opt/fog/log/
+total 376
+-rw-r--r-- 1 root root   1239 abr  1 15:22 fogfiledeletequeue.log
+-rw-r--r-- 1 root root   8141 abr  1 15:22 fogimagesize.log
+-rw-r--r-- 1 root root   2555 abr  1 16:03 fogreplicator.log
+-rw-r--r-- 1 root root   1210 abr  1 16:05 fogscheduler.log
+-rw-r--r-- 1 root root   8466 abr  1 15:52 fogsnapinhash.log
+-rw-r--r-- 1 root root   1375 abr  1 16:03 fogsnapinrep.log
+-rw-r--r-- 1 root root  37527 abr  1 16:03 groupmanager.log
+-rw-r--r-- 1 root root   1794 abr  1 16:05 multicast.log
+-rw-r--r-- 1 root root   3501 abr  1 10:40 multicast.log.udpcast.1
+-rw-r--r-- 1 root root   3501 abr  1 12:51 multicast.log.udpcast.2
+-rw-r--r-- 1 root root  45482 abr  1 13:06 multicast.log.udpcast.3
+-rw-r--r-- 1 root root    193 abr  1 15:35 multicast.log.udpcast.5
+-rw-r--r-- 1 root root 140479 abr  1 16:02 pinghost.log
+-rw-r--r-- 1 root root  80731 abr  1 16:03 servicemaster.log

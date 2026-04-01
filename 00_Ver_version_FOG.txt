@@ -1,0 +1,5 @@
+cat /var/www/html/fog/lib/fog/system.class.php | grep FOG_VERSION
+
+root@2asircristobal:/home/cristobal# cat /var/www/html/fog/lib/fog/system.class.php | grep FOG_VERSION
+        define('FOG_VERSION', '1.6.0-beta.2297');
+root@2asircristobal:/home/cristobal#

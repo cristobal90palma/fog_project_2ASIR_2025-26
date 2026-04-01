@@ -1,0 +1,124 @@
+[02-15-26 9:03:36 pm] 
+==================================
+===        ====    =====      ====
+===  =========  ==  ===   ==   ===
+===  ========  ====  ==  ====  ===
+===  ========  ====  ==  =========
+===      ====  ====  ==  =========
+===  ========  ====  ==  ===   ===
+===  ========  ====  ==  ====  ===
+===  =========  ==  ===   ==   ===
+===  ==========    =====      ====
+==================================
+===== Free Opensource Ghost ======
+==================================
+============ Credits =============
+= https://fogproject.org/Credits =
+==================================
+== Released under GPL Version 3 ==
+==================================
+
+
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 2asircristobal
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 10.2.7.5
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.0.1
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.1.1
+[02-15-26 9:03:36 pm]  * Starting PingHosts Service
+[02-15-26 9:03:36 pm]  * Checking for new items every 300 seconds
+[02-15-26 9:03:36 pm]  * Starting service loop
+[02-15-26 9:03:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:03:36 pm]  * This servers ip(s)
+[02-15-26 9:03:36 pm]  |	2asircristobal
+[02-15-26 9:03:36 pm]  |	10.2.7.5
+[02-15-26 9:03:36 pm]  |	127.0.0.1
+[02-15-26 9:03:36 pm]  |	127.0.1.1
+[02-15-26 9:03:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:03:36 pm]  * All hosts updated
+[02-15-26 9:08:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:08:36 pm]  * This servers ip(s)
+[02-15-26 9:08:36 pm]  |	2asircristobal
+[02-15-26 9:08:36 pm]  |	10.2.7.5
+[02-15-26 9:08:36 pm]  |	127.0.0.1
+[02-15-26 9:08:36 pm]  |	127.0.1.1
+[02-15-26 9:08:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:08:36 pm]  * All hosts updated
+[02-15-26 9:13:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:13:36 pm]  * This servers ip(s)
+[02-15-26 9:13:36 pm]  |	2asircristobal
+[02-15-26 9:13:36 pm]  |	10.2.7.5
+[02-15-26 9:13:36 pm]  |	127.0.0.1
+[02-15-26 9:13:36 pm]  |	127.0.1.1
+[02-15-26 9:13:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:13:36 pm]  * All hosts updated
+[02-15-26 9:18:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:18:36 pm]  * This servers ip(s)
+[02-15-26 9:18:36 pm]  |	2asircristobal
+[02-15-26 9:18:36 pm]  |	10.2.7.5
+[02-15-26 9:18:36 pm]  |	127.0.0.1
+[02-15-26 9:18:36 pm]  |	127.0.1.1
+[02-15-26 9:18:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:18:36 pm]  * All hosts updated
+[02-15-26 9:23:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:23:36 pm]  * This servers ip(s)
+[02-15-26 9:23:36 pm]  |	2asircristobal
+[02-15-26 9:23:36 pm]  |	10.2.7.5
+[02-15-26 9:23:36 pm]  |	127.0.0.1
+[02-15-26 9:23:36 pm]  |	127.0.1.1
+[02-15-26 9:23:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:23:36 pm]  * All hosts updated
+[02-15-26 9:28:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:28:36 pm]  * This servers ip(s)
+[02-15-26 9:28:36 pm]  |	2asircristobal
+[02-15-26 9:28:36 pm]  |	10.2.7.5
+[02-15-26 9:28:36 pm]  |	127.0.0.1
+[02-15-26 9:28:36 pm]  |	127.0.1.1
+[02-15-26 9:28:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:28:36 pm]  * All hosts updated
+[02-15-26 9:33:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:33:36 pm]  * This servers ip(s)
+[02-15-26 9:33:36 pm]  |	2asircristobal
+[02-15-26 9:33:36 pm]  |	10.2.7.5
+[02-15-26 9:33:36 pm]  |	127.0.0.1
+[02-15-26 9:33:36 pm]  |	127.0.1.1
+[02-15-26 9:33:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:33:36 pm]  * All hosts updated
+[02-15-26 9:38:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:38:36 pm]  * This servers ip(s)
+[02-15-26 9:38:36 pm]  |	2asircristobal
+[02-15-26 9:38:36 pm]  |	10.2.7.5
+[02-15-26 9:38:36 pm]  |	127.0.0.1
+[02-15-26 9:38:36 pm]  |	127.0.1.1
+[02-15-26 9:38:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:38:36 pm]  * All hosts updated
+[02-15-26 9:43:36 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:43:36 pm]  * This servers ip(s)
+[02-15-26 9:43:36 pm]  |	2asircristobal
+[02-15-26 9:43:36 pm]  |	10.2.7.5
+[02-15-26 9:43:36 pm]  |	127.0.0.1
+[02-15-26 9:43:36 pm]  |	127.0.1.1
+[02-15-26 9:43:36 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:43:36 pm]  * All hosts updated
+[02-15-26 9:48:37 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:48:37 pm]  * This servers ip(s)
+[02-15-26 9:48:37 pm]  |	2asircristobal
+[02-15-26 9:48:37 pm]  |	10.2.7.5
+[02-15-26 9:48:37 pm]  |	127.0.0.1
+[02-15-26 9:48:37 pm]  |	127.0.1.1
+[02-15-26 9:48:37 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:48:37 pm]  * All hosts updated
+[02-15-26 9:53:37 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:53:37 pm]  * This servers ip(s)
+[02-15-26 9:53:37 pm]  |	2asircristobal
+[02-15-26 9:53:37 pm]  |	10.2.7.5
+[02-15-26 9:53:37 pm]  |	127.0.0.1
+[02-15-26 9:53:37 pm]  |	127.0.1.1
+[02-15-26 9:53:37 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:53:37 pm]  * All hosts updated
+[02-15-26 9:58:37 pm]  * FOG Web Host IP: 10.2.7.5
+[02-15-26 9:58:37 pm]  * This servers ip(s)
+[02-15-26 9:58:37 pm]  |	2asircristobal
+[02-15-26 9:58:37 pm]  |	10.2.7.5
+[02-15-26 9:58:37 pm]  |	127.0.0.1
+[02-15-26 9:58:37 pm]  |	127.0.1.1
+[02-15-26 9:58:37 pm]  * Attempting to ping 0 hosts
+[02-15-26 9:58:37 pm]  * All hosts updated

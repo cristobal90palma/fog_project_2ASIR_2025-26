@@ -1,0 +1,21 @@
+00_Error_ChecIn_Failed.txt
+
+ERROR_SIZE_MISMATCH
+
+Quick Registration
+https://forums.fogproject.org/topic/18106/quick-registration-and-invenotry-not-working/5
+
+ESTOS TRES ERRORES ANTERIORES SUCEDEN EN LA VERSIÓN STABLE.
+
+
+Mira, voy a seguir con la 1.6 porque si no no acabo.
+
+
+
+ERROR en la asociación hosts --> group
+
+00_ERRORES.docx
+
+
+
+Deploy groups unicast y multicast --> Cancelar no funciona. Pausar tampoco.

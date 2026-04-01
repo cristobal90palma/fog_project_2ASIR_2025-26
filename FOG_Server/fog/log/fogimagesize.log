@@ -1,0 +1,34 @@
+[02-15-26 9:03:36 pm] 
+==================================
+===        ====    =====      ====
+===  =========  ==  ===   ==   ===
+===  ========  ====  ==  ====  ===
+===  ========  ====  ==  =========
+===      ====  ====  ==  =========
+===  ========  ====  ==  ===   ===
+===  ========  ====  ==  ====  ===
+===  =========  ==  ===   ==   ===
+===  ==========    =====      ====
+==================================
+===== Free Opensource Ghost ======
+==================================
+============ Credits =============
+= https://fogproject.org/Credits =
+==================================
+== Released under GPL Version 3 ==
+==================================
+
+
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 2asircristobal
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 10.2.7.5
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.0.1
+[02-15-26 9:03:36 pm] Interface Ready with IP Address: 127.0.1.1
+[02-15-26 9:03:36 pm]  * Starting ImageSize Service
+[02-15-26 9:03:36 pm]  * Checking for new items every 3600 seconds
+[02-15-26 9:03:36 pm]  * Starting service loop
+[02-15-26 9:03:36 pm]  * Starting Image Size Service.
+[02-15-26 9:03:36 pm]  * We are group ID: 1. We are group name: default
+[02-15-26 9:03:36 pm]  * We are node ID: 1. We are node name: DefaultMember
+[02-15-26 9:03:36 pm]  * Finding any images associated with this group as its primary group
+[02-15-26 9:03:36 pm]  * No images associated with this group as master.
+[02-15-26 9:03:36 pm]  * Completed.

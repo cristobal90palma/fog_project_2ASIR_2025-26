@@ -1,0 +1,11 @@
+Error "Error returned no active task found for host multicast"
+
+https://gemini.google.com/app/d952e2b095f742ba
+
+1. El "Check-in" tardío
+
+En despliegues Multicast, el servidor a veces cierra la sesión de la tarea una vez que el flujo principal de datos termina. Si el equipo cliente intenta actualizar su estado un segundo después de que el servidor haya marcado la tarea como "completada", recibirás el error:
+
+    Error returned: No Active Task found for Host
+
+Solución: Si la imagen se cargó correctamente en el disco duro y el equipo inicia Windows/Linux sin problemas tras el reinicio, puedes ignorar este mensaje. Es simplemente un error de registro cosmético al final del proceso.

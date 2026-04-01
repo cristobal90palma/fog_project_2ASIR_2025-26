@@ -1,0 +1,74 @@
+01) Documentar la configuración de los dispositivos de red. ++++++++++
+
+02) Documentar la instalación de FOG, configuración de DHCP Server y DNSMASQ
+
+Hablar de .fogsettings y capacidad de volver a reconfigurar instalación
+https://docs.fogproject.org/en/latest/installation/server/install-fog-server/#final-steps
+El párrafo
+https://docs.fogproject.org/en/latest/management/server/install-fogsettings/#os-identifier
+Explicación de que es cada cosa
+
+DNSMASQ y configuración para cuando peticiones vienen de otras SubNets --> No nos sirve a nosotros porque para las 
+otras usamos DHCP Server
+https://forums.fogproject.org/topic/12796/installing-dnsmasq-on-your-fog-server
+
+
+03) Registrar usuarios
+
+
+
+
+04) Captura de imagenes
+
+Registrar Host del cual se quiere adquirir imagen
+Crear plantilla para el Sistema Operativo que vamos a capturar
+Capturar imagen del host anterior --> Hosts --> Capture --> Primary Mac --> Host image --> Capture (again) --> Arranca el Host
+
+
+
+
+https://forums.fogproject.org/topic/3400/what-s-the-difference-between-a-quick-registration-and-a-full-registration/2 
+
+
+05) Despliegue de imagenes
+
+
+
+
+MOSTRAR QUE SE PUEDE HACER DESPLIEGUE DESDE EL MENU FOG
+MOSTRAR QUE SE PUEDE HACER DESPLIEGUE AL HACER EL FULL REGISTRY
+
+Unicast
+Multicast
+
+
+
+
+
+Conveniencias de hacer sysprep --> No copia MAC, ni SSID
+
+
+06) Automatización de programas post-despliegue
+
+unnattended file
+
+07) Wake On LAN
+
+En tu casa, para las pruebas: FOG en VirtualBOX e intenta arrancar tu Optiplex
+
+Equipo WireShark para capturar paquetes
+
+o se puede con TCMP???
+
+08) Securización
+
+
+09) Exportar e importar imagenes.
+
+https://wiki.fogproject.org/wiki/index.php?title=Migrate_images_manually
+https://wiki.fogproject.org/wiki/index.php?title=Migrate_FOG
+https://forums.fogproject.org/topic/6749/export-and-import-images/3
+
+
+10) HTTPS
+

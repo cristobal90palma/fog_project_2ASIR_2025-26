@@ -1,0 +1,215 @@
+Esta parte del código es técnica y muy específica. Básicamente, estás "enseñándole" al servidor DHCP un nuevo lenguaje que no conoce por defecto.
+
+El protocolo DHCP estándar solo sabe entregar cosas básicas (IP, Máscara, DNS). Pero para que un equipo arranque por red (PXE), necesita datos extra. Aquí es donde entra la definición de opciones personalizadas.
+
+Vamos línea por línea:
+1. option space PXE;
+
+Aquí estás creando un contenedor o "diccionario" vacío llamado PXE. Le dices al servidor: "Voy a definir un grupo de opciones que solo se usarán cuando hablemos con clientes que busquen arrancar por red".
+2. Las opciones de MTFTP (Multicast TFTP)
+
+Estas líneas definen qué tipo de datos viajan en cada "código" del protocolo PXE:
+
+    option PXE.mtftp-ip code 1 = ip-address;
+    Define el código 1 como una dirección IP. Se usa para decirle al cliente en qué IP debe escuchar el arranque por Multicast (enviar un archivo a muchos PCs a la vez).
+
+    option PXE.mtftp-cport code 2 = unsigned integer 16;
+    Define el puerto del cliente (puerto UDP de 16 bits). Es el "buzón" donde el PC espera los datos.
+
+    option PXE.mtftp-sport code 3 = unsigned integer 16;
+    Define el puerto del servidor. Es desde donde el servidor FOG enviará los datos.
+
+    option PXE.mtftp-tmout code 4 = unsigned integer 8;
+    El Timeout. Cuántos segundos debe esperar el PC antes de rendirse si no recibe datos.
+
+    option PXE.mtftp-delay code 5 = unsigned integer 8;
+    El Delay. Cuánto tiempo debe esperar el PC antes de intentar reiniciar una transferencia fallida.
+
+    Nota: Aunque definas esto, FOG normalmente usa Unicast (de uno a uno), pero estas definiciones son estándar para que el servicio DHCP no de errores de sintaxis si un cliente las llega a pedir.
+
+3. La Joya de la Corona: option arch
+
+option arch code 93 = unsigned integer 16;
+
+Esta es la línea más importante de todo tu archivo de configuración.
+
+    El Código 93 es un estándar mundial.
+
+    Cuando una computadora pide una IP, envía en su mensaje DHCP un número que identifica su Arquitectura (Arch).
+
+    Gracias a esta línea, tu servidor DHCP puede "leer" ese número.
+
+¿Para qué sirve?
+Gracias a que definiste el code 93, luego puedes hacer los match que tienes más abajo en el archivo:
+
+    Si el cliente envía un 0, el servidor sabe que es BIOS (Legacy).
+
+    Si envía un 7 o 9, sabe que es UEFI x64.
+
+En resumen
+
+Estas líneas no están enviando datos todavía, solo están configurando el mapa. Es como definir las columnas de una base de datos antes de llenarla de información. Sin estas definiciones, el servidor DHCP ignoraría por completo las peticiones especiales de las tarjetas de red de tus computadoras.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. use-host-decl-names on;
+
+Esta opción es muy útil para la organización.
+
+    Qué hace: Si tú defines un equipo específico en el archivo de configuración (usando su dirección MAC) y le pones un nombre (ej. host aula-informatica-01 { ... }), el servidor DHCP le enviará ese nombre al ordenador cuando se conecte.
+
+    Para qué sirve: El ordenador configurará automáticamente su "hostname" con el nombre que tú le hayas asignado en el servidor. Es ideal para que todos los equipos de un aula tengan el nombre correcto sin tener que ir uno por uno.
+
+2. ddns-update-style interim;
+
+Esto se refiere al DNS Dinámico (DDNS).
+
+    Qué hace: Indica el "estilo" o protocolo que usará el servidor DHCP para avisarle a un servidor DNS que una IP ha sido entregada a un equipo.
+
+    Interim: Es el modo estándar y más compatible. Significa que el servidor DHCP intentará actualizar el registro en el servidor DNS cada vez que entregue o renueve una IP.
+
+    Dato extra: En tus apuntes mencionas ddns-update-style none;. Se usa none cuando no tienes un servidor DNS que acepte actualizaciones automáticas (como un Active Directory o un BIND configurado).
+
+3. ignore client-updates;
+
+Esta línea es por seguridad y control.
+
+    Qué hace: Le dice al servidor DHCP: "No hagas caso si el cliente (el PC que se conecta) intenta decirte cuál debe ser su nombre en el DNS".
+
+    Por qué se usa: Evita que un usuario cambie el nombre de su PC a algo como "servidor-principal" y confunda al resto de la red. Solo el servidor tiene la autoridad para decidir los nombres.
+
+4. authoritative;
+
+Como bien pusiste en tu comentario, esta es la línea que te da el poder.
+
+    Por qué no viene por defecto: Por precaución. Si instalas un servidor DHCP por error en una red que ya tiene uno (como la de tu oficina o casa) y viene como authoritative, tu servidor empezaría a "robar" clientes y a darles IPs que quizás no funcionan, desconectando a todo el mundo.
+
+    En tu caso (FOG/Examen): Es obligatorio. Al estar descomentada, si un cliente pide una IP que no le corresponde, tu servidor le enviará un paquete DHCPNAK (rechazo). Esto obliga al cliente a pedir una IP nueva inmediatamente, lo cual es vital para que el arranque PXE no falle cuando mueves un ordenador de una subred a otra.
+
+Resumen rápido para tu examen:
+
+    use-host-decl-names: El servidor asigna los nombres.
+
+    ddns-update-style: Cómo habla el DHCP con el DNS.
+
+    ignore client-updates: El cliente no manda sobre su nombre.
+
+    authoritative: "Yo soy el jefe de esta red; si veo algo mal, lo corrijo".
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Gemini ha dicho
+
+Aquí entramos en la configuración de las redes propiamente dichas. Es donde le dices al servidor qué trozos del pastel (IPs) va a repartir y a quién.
+
+Lo he dividido en dos conceptos clave para que lo entiendas perfectamente:
+1. El bloque "Mudo" (10.2.7.0)
+Bash
+
+subnet 10.2.7.0 netmask 255.255.255.0 {
+    not authoritative;
+}
+
+    El porqué: Tu servidor DHCP tiene una tarjeta de red con una IP en este rango (la 10.2.7.x). Si no declaras esta subred en el archivo, el servicio DHCP ni siquiera arrancará (dará error de "No subnet declaration for eth0").
+
+    not authoritative;: Como vimos, aquí el servidor es "tímido". Si alguien en esta red pide una IP, el servidor se queda callado para no pelearse con el router principal u otros servidores.
+
+    Sin range: Al no haber línea de range, el servidor escucha en esta red pero no entrega ninguna IP. Solo sirve como "puente" para recibir las peticiones que vienen de las otras subredes.
+
+2. Los bloques de Servicio (Subredes 10, 20 y 30)
+
+Estos tres bloques son casi idénticos y son los que realmente trabajan. Vamos a usar la Subred 10 como ejemplo:
+Línea	Significado
+subnet 172.18.10.0...	Define el segmento de red donde están los PCs de los alumnos/clientes.
+option subnet-mask...	Le dice al PC: "Tu red es de tamaño 255.255.255.0".
+range dynamic-bootp...	El pool de IPs. Reparte desde la .100 hasta la .250. El término dynamic-bootp es vital para que FOG pueda enviar imágenes a equipos que aún no tienen SO.
+default/max-lease-time	Tiempo de "alquiler" de la IP (6 y 12 horas).
+option routers 172.18.10.1	Le dice al PC quién es su Puerta de Enlace (Gateway) para salir a Internet.
+option domain-name-servers	Le da los DNS. El 172.16.200.1 suele ser el DNS interno de la organización y 8.8.8.8 el de reserva.
+next-server 10.2.7.5;	Punto crítico: Le dice al PC: "Si vas a arrancar por PXE, el servidor de archivos (TFTP) es el FOG en la 10.2.7.5".
+¿Por qué se repiten en las tres subredes?
+
+Porque tienes tres redes separadas (probablemente VLANs). Gracias a tu DHCP Relay (el Mikrotik), cuando un paquete llega desde la red 20, el servidor DHCP sabe que debe mirar el bloque 172.18.20.0 y entregar una IP de ese rango específico, no de los otros.
+Un detalle para tu examen:
+
+Fíjate que el next-server (la IP del FOG) es siempre la misma (10.2.7.5), pero el option routers (la puerta de enlace) cambia para cada subred (172.18.10.1, 172.18.20.1, etc.). Esto es porque el servidor FOG es central, pero cada red necesita su propia salida a internet.
+
+
+
+
+
+
+
+
+Esta es la parte más "inteligente" de tu configuración. Aquí es donde el servidor DHCP deja de ser un simple repartidor de IPs y se convierte en un selector de arranque.
+
+Cuando una tarjeta de red intenta arrancar por PXE, envía un código que dice: "Hola, soy una arquitectura tipo X". El servidor lee ese código y, gracias a estas class, le entrega el archivo de arranque exacto que su hardware necesita.
+1. La lógica del match
+
+match if substring(option vendor-class-identifier, 0, 20) = "PXEClient:Arch:0000X";
+
+    vendor-class-identifier: Es la etiqueta que envía el PC.
+
+    substring(..., 0, 20): El servidor mira los primeros 20 caracteres de esa etiqueta para buscar el código de arquitectura.
+
+2. Desglose de las Clases principales
+Clase "Legacy" (BIOS)
+
+    Código: 00000
+
+    Archivo: undionly.kkpxe
+
+    Uso: Ordenadores antiguos. No entienden el formato UEFI, por lo que necesitan un archivo .kpxe que emula un entorno de ejecución sencillo. (Nota: en tu archivo pusiste .kkpxe, asegúrate de que el archivo real en /tftpboot tenga esas dos 'k').
+
+Clases UEFI (Modernas)
+
+Aquí tienes varias porque el estándar UEFI tiene variantes:
+
+    UEFI-64-1/2/3: Códigos 00007, 00008, 00009. Es el estándar para casi todos los PCs y laptops de los últimos 10 años.
+
+    UEFI-32: Códigos 00002 y 00006. Se usa en tablets o laptops muy específicos (como los primeros Intel Atom).
+
+    Archivo: snponly.efi. Es el motor de arranque moderno que FOG usa para equipos con Secure Boot o interfaz UEFI.
+
+Clase "UEFI-ARM64"
+
+    Código: 00011
+
+    Archivo: arm64-efi/snponly.efi
+
+    Uso: Equipos con procesadores ARM (como las nuevas Surface Pro con procesador Snapdragon o dispositivos tipo Raspberry Pi que arrancan por red).
+
+3. Casos Especiales
+SURFACE-PRO-4
+
+Las Surface son famosas por ser "especiales" con el PXE. Aquí el servidor busca una cadena más larga (0, 32) que incluye el identificador UNDI:003016. Si no tuviera esta clase específica, la Surface podría intentar cargar un archivo genérico y fallar al reconocer la tarjeta de red (que suele ser un adaptador USB-Ethernet).
+Apple-Intel-Netboot
+
+Los equipos Apple no usan el estándar PXE de Intel; usan su propio protocolo llamado BSDP (Boot Service Discovery Protocol).
+
+    option dhcp-parameter-request-list 1,3,17,43,60;: Pide opciones específicas que Apple necesita.
+
+    option vendor-encapsulated-options: Son códigos hexadecimales que le dicen al Mac cosas como el nombre del servidor y la imagen por defecto. Sin esto, un Mac nunca vería tu servidor FOG en el menú de arranque (manteniendo pulsada la tecla Option o N).
+
+Resumen para el examen:
+
+Si te preguntan para qué sirve este bloque, la respuesta corta es: Arquitectura Dinámica.
+Permite que un solo servidor FOG atienda a un PC de hace 15 años (Legacy), a un PC gamer actual (UEFI x64) y a un Mac, dándole a cada uno el "traductor" (filename) que entiende su placa base.
