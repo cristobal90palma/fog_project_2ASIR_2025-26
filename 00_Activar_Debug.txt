@@ -1,0 +1,9 @@
+https://forums.fogproject.org/topic/14609/image-failed-to-restore-exited-with-code-1/2
+
+So here is what I want you to do.
+
+Schedule another capture/deploy (what ever you were doing) but before you hit the schedule task button, tick the debug checkbox on that same screen. Then pxe boot the target computer. You will be presented with several screens of text that you need to clear with the enter key. Eventually you will be dropped to a linux command prompt. This is debug mode.
+
+Now we are going to single step through the capture deployment process. The process will pause a breakpoints in the code. You will need to press the enter key to move to the next breakpoint. You want to view the partclone screen(s). The error message will be scattered about the partclone screen, typically with white text with a black background. We will need to see this error. Grab a screen shot of this partclone error and post it here.
+
+To start the process key in fog at the linux command prompt.
