@@ -19,3 +19,22 @@ ERROR en la asociación hosts --> group
 
 
 Deploy groups unicast y multicast --> Cancelar no funciona. Pausar tampoco.
+
+
+
+memtest+86 solo funciona en equipos que usen Legacy Bios
+
+
+iPXE 1.21.1+ (g5de5d) -- Open Source Network Boot Firmware -- https://ipxe.org
+Features: DNS FTP HTTP HTTPS iSCSI NFS TFTP VLAN AoE EFI Menu
+Configuring (net0 bc:24:11:fc:be:74)...... ok
+Received DHCP answer on interface net0
+tftp://10.2.7.5/default.ipxe... ok
+http://10.2.7.5/fog/service/ipxe/boot.php... ok
+memdisk... ok
+Could not select: Exec format error (https://ipxe.org/2e008081)
+Could not boot: Exec format error (https://ipxe.org/2e008081)
+Could not boot: Exec format error (https://ipxe.org/2e008081)
+Chainloading failed, hit 's' for the iPXE shell; reboot in 10 seconds
+
+

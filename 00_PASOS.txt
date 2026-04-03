@@ -48,6 +48,7 @@ Multicast
 Conveniencias de hacer sysprep --> No copia MAC, ni SSID
 
 
+
 06) Automatización de programas post-despliegue
 
 unnattended file
@@ -60,15 +61,43 @@ Equipo WireShark para capturar paquetes
 
 o se puede con TCMP???
 
+https://gemini.google.com/app/a94014b8f35e3565
+Para capturar paquetes de Wake on LAN (WoL), necesitas buscar tráfico que utilice el protocolo UDP y, por lo general, los puertos 7 o 9 (que son los estándar para el "Magic Packet").
+
+Aquí tienes el comando de tcpdump más efectivo para esto:
+Bash
+
+sudo tcpdump -i eth207 udp port 7 or port 9 -XX -vv
+
+Desglose del comando:
+
+    -i eth207: Especifica la interfaz donde quieres escuchar (cámbiala por la que reciba el tráfico, por ejemplo eth207 si viene del servidor).
+
+    udp port 7 or port 9: Filtra solo los puertos comunes de WoL.
+
+    -XX: (Muy importante) Muestra el contenido del paquete en Hexadecimal y ASCII. El "Magic Packet" se identifica porque verás 6 bytes de FF seguidos de la dirección MAC del destino repetida 16 veces.
+
+    -vv: Modo "very verbose" para ver todos los detalles de las cabeceras.
+
+
 08) Securización
 
+????? IPtables, access list, etc
+También el menú.
 
-09) Exportar e importar imagenes.
+
+09) Exportar e importar (Backups)
+
+Imágenes
 
 https://wiki.fogproject.org/wiki/index.php?title=Migrate_images_manually
 https://wiki.fogproject.org/wiki/index.php?title=Migrate_FOG
 https://forums.fogproject.org/topic/6749/export-and-import-images/3
 
+Base de datos --> Hosts, grupos, etc.
+
 
 10) HTTPS
+
+Es red interna del instituto, es necesario? --> Preguntar a Diego
 
