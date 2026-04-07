@@ -1,0 +1,17 @@
+router ubuntu:
+
+Multicast --> La opción de SCMROUTE le parece perfecta.
+
+Wake ON LAN
+
+
+https://oneuptime.com/blog/post/2026-03-20-configure-broadcast-forwarding-wake-on-lan/view
+
+Usa la opción 2: Es mejor.
+
+WakeONLAN Detector: Para la exposición
+https://superuser.com/questions/1546451/test-wake-on-lan-without-actually-doing-it
+
+
+No te preocupes por el HTTPS.
+Si acaso servidor NTP. (Esto son cosas de Diego)

@@ -47,6 +47,8 @@ Multicast
 
 Conveniencias de hacer sysprep --> No copia MAC, ni SSID
 
+HACER UN  VIDEO QUE SE MUESTRE MEJOR LA CONFIGURACIÓN A PRUEBA DE FALLOS EN EL MULTICAST 
+
 
 
 06) Automatización de programas post-despliegue

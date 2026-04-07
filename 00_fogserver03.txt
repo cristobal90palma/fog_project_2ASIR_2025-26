@@ -2,7 +2,7 @@ fogserver03
 
 00_Error_ChecIn_Failed.txt  --> Capturando no ocurre
 
-ERROR_SIZE_MISMATCH
+ERROR_SIZE_MISMATCH --> No ocurre
 
 Quick Registration 			--> No ocurre
 https://forums.fogproject.org/topic/18106/quick-registration-and-invenotry-not-working/5
