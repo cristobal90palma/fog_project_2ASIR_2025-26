@@ -1,5 +1,3 @@
-from weasyprint import HTML
-
 # Content for the README.md
 readme_content = """# Proyecto de Infraestructura de Red y Despliegue con FOG Project
 
