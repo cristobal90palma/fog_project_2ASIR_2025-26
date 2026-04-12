@@ -1,43 +1,61 @@
-# Content for the README.md
-readme_content = """# Proyecto de Infraestructura de Red y Despliegue con FOG Project
+Proyecto de Infraestructura de Red y Despliegue con FOG Project
 
-Este repositorio contiene la documentación técnica y los archivos de configuración para la implementación de una infraestructura de red avanzada, centrada en el despliegue masivo de equipos mediante **FOG Project**, gestión de subredes y servicios de red críticos.
+Este repositorio contiene la documentación técnica y los archivos de configuración para la implantación de un sistema de despliegue masivo mediante FOG Project, junto con la gestión de la infraestructura de red necesaria para dar servicio en un entorno segmentado (multi-subred).
+🚀 Descripción del Proyecto
 
-## 🚀 Descripción del Proyecto
+El objetivo es configurar un entorno de red robusto utilizando Proxmox VE como hipervisor. El proyecto abarca desde la clonación por red (PXE) hasta el enrutamiento avanzado entre bridges y la gestión remota de energía (Wake On LAN) mediante escenarios simulados.
+Componentes Principales:
 
-El objetivo principal es la configuración de un entorno de red segmentado utilizando **Proxmox** como hipervisor, donde se gestionan servicios de clonación por red (PXE), encaminamiento entre VLANs, y gestión remota de energía (Wake On LAN).
+    Servidor FOG (Ubuntu Server): Nodo maestro para la gestión centralizada de imágenes.
 
-### Componentes Principales:
-- **Servidor FOG (Ubuntu):** Nodo maestro para la gestión de imágenes y despliegue.
-- **R1-Ubuntu / Mikrotik:** Configuración de Router con capacidades de DHCP-Relay y Forwarding.
-- **Clientes Multi-plataforma:** Soporte para arranque en entornos Legacy BIOS y UEFI BIOS.
+    Gateway (R1-Ubuntu / MikroTik): Configuración de routing con capacidades de DHCP-Relay y Forwarding.
 
-## 🛠️ Tecnologías Utilizadas
+    Clientes Multi-plataforma: Soporte de arranque dual para entornos Legacy BIOS y UEFI BIOS.
 
-- **Hipervisor:** Proxmox VE
-- **SO Servidor:** Ubuntu Server (LVM configurado)
-- **Servicios de Red:** ISC-DHCP-Server, DNSMASQ (ProxyDHCP), NFS, TFTP.
-- **Networking:** Netplan, IP Forwarding, Multicast (SMCroute), DHCP-Relay.
-- **Herramientas:** FOG Project, Etherwake, Git.
+🛠️ Tecnologías y Servicios
 
-## 📂 Estructura de la Infraestructura
+He unificado "Servicios" y "Networking" para reflejar mejor cómo interactúan en la infraestructura:
 
-1.  **Servidor FOG:**
-    - IP Estática: `10.2.7.5/24`
-    - Configuración de almacenamiento expandible mediante LVM.
-    - Repositorio de imágenes centralizado.
+    Sistemas y Virtualización: Proxmox VE, Ubuntu Server (con gestión de volúmenes LVM).
 
-2.  **Configuración de Red:**
-    - **DHCP-Relay:** Configurado para servir IPs a través de diferentes bridges (`vmbr207`, `vmbr217`, etc.).
-    - **Multicast:** Implementación de rutas específicas para optimizar la clonación masiva sin saturar la red.
-    - **DNSMASQ:** Configuración de ProxyDHCP para coexistencia con otros servidores DHCP en la misma subred.
+    Servicios de Despliegue: FOG Project (NFS, TFTP, FTP), DNSMASQ (ProxyDHCP).
 
-3.  **Gestión de Clientes:**
-    - Scripts de automatización para **Wake On LAN (WOL)**.
-    - Diferenciación de archivos de arranque (`undionly.kpxe` para Legacy y `ipxe.efi` para UEFI).
+    Infraestructura de Red: * Gestión de IP: ISC-DHCP-Server, DHCP-Relay.
 
-## 🔧 Instalación y Configuración Rápida
+        Routing & Tráfico: Netplan, IP Forwarding, Multicast (SMCroute).
 
-### Requisitos Previos
-- Servidor Ubuntu actualizado.
-- Repositorio de FOG clonado:
+        Control Remoto: Wake On LAN (Etherwake).
+
+    Control de Versiones: Git / GitHub.
+
+📂 Arquitectura de la Infraestructura
+
+    Servidor FOG:
+
+        IP Estática: 10.2.7.5/24.
+
+        Almacenamiento escalable mediante LVM para el repositorio de imágenes.
+
+    Configuración de Red (Inter-VLAN):
+
+        DHCP-Relay: Intermediario para servir IPs en los bridges vmbr217, vmbr227 y vmbr237.
+
+        ProxyDHCP: Implementación con DNSMASQ para coexistir con servidores DHCP preexistentes sin generar conflictos.
+
+        Optimización Multicast: Configuración de rutas para despliegues masivos eficientes.
+
+    Gestión de Clientes:
+
+        Automatización de encendido mediante scripts WOL.
+
+        Entrega dinámica de archivos de arranque: undionly.kpxe (Legacy) e ipxe.efi (UEFI).
+
+🔧 Instalación y Configuración Rápida
+Requisitos Previos
+
+    Servidor Ubuntu Server 20.04/22.04 LTS.
+
+    Acceso a los repositorios oficiales de FOG:
+   
+
+    git clone https://github.com/FOGProject/fogproject.git
