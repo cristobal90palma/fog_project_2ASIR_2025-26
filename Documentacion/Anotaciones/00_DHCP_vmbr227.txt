@@ -1,0 +1,22 @@
+DHPC:
+
+# 1. Crear el Pool
+/ip pool add name=dhcp_pool227 ranges=172.18.20.100-172.18.20.250
+
+# 2. Crear la red con múltiples DNS (Separados por coma)
+/ip dhcp-server network
+add address=172.18.20.0/24 gateway=172.18.20.1 dns-server=172.16.200.1,8.8.8.8 next-server=10.2.7.5
+
+# 3. Crear el servidor DHCP
+/ip dhcp-server
+add name=vmbr227 interface=ether2 address-pool=dhcp_pool227 lease-time=10h disabled=no
+
+
+/ip dhcp-server matcher
+add name=match-legacy-227 code=93 value="0x0000" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-legacy
+add name=match-uefi32-227 code=93 value="0x0006" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-uefi32
+add name=match-uefi64-227 code=93 value="0x0007" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-uefi64
+add name=match-uefi64-8-227 code=93 value="0x0008" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-uefi64
+add name=match-uefi64-9-227 code=93 value="0x0009" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-uefi64
+add name=match-arm64-227 code=93 value="0x000b" matching-type=exact server=vmbr227 address-pool=dhcp_pool227 option-set=set-arm64
+

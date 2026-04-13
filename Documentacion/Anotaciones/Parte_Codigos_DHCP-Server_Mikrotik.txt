@@ -1,0 +1,114 @@
+DHPC:
+
+# 1. Crear el Pool
+/ip pool add name=dhcp_pool217 ranges=172.18.10.100-172.18.10.250
+
+# 2. Crear la red con múltiples DNS (Separados por coma)
+/ip dhcp-server network
+add address=172.18.10.0/24 gateway=172.18.10.1 dns-server=172.16.200.1,8.8.8.8 next-server=10.2.7.5
+
+# 3. Crear el servidor DHCP
+/ip dhcp-server
+add name=vmbr217 interface=ether1 address-pool=dhcp_pool217 lease-time=10h disabled=no
+
+
+
+
+1. Crear las Opciones (DHCP Options)
+
+Copia y pega esto para definir los archivos de arranque y el servidor FOG.
+
+/ip dhcp-server option
+add code=66 name=fog-server value="s'10.2.7.5'"
+add code=67 name=boot-legacy value="s'undionly.kpxe'"
+add code=67 name=boot-uefi64 value="s'snponly.efi'"
+add code=67 name=boot-uefi32 value="s'i386-efi/snponly.efi'"
+add code=67 name=boot-arm64 value="s'arm64-efi/snponly.efi'"
+
+
+
+2. Crear los Grupos (Option Sets)
+
+Esto agrupa la IP del servidor con el archivo correspondiente para cada arquitectura.
+Fragmento de código
+
+/ip dhcp-server option sets
+add name=set-legacy options=fog-server,boot-legacy
+add name=set-uefi64 options=fog-server,boot-uefi64
+add name=set-uefi32 options=fog-server,boot-uefi32
+add name=set-arm64 options=fog-server,boot-arm64
+
+
+
+3. Configurar el Matcher (La lógica del "IF")
+
+Aquí es donde MikroTik decide qué enviar basándose en el ID que envía el PC. Usaremos matcher (que aparece en tu menú de /ip dhcp-server).
+Fragmento de código
+
+
+
+/ip dhcp-server matcher
+add name=match-legacy-217 code=93 value="0x0000" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-legacy
+add name=match-uefi32-217 code=93 value="0x0006" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi32
+add name=match-uefi64-217 code=93 value="0x0007" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
+add name=match-uefi64-8-217 code=93 value="0x0008" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
+add name=match-uefi64-9-217 code=93 value="0x0009" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
+add name=match-arm64-217 code=93 value="0x000b" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-arm64
+
+
+Nota: En el matcher, el código 93 (arquitectura) suele enviarse como valor hexadecimal.
+
+
+Y Ahora hay que hacer el resto de la configuración a mano.
+
+
+\\\\\\\\\\\\\
+
+[admin@MikroTik] /ip/dhcp-server/matcher> /ip dhcp-server matcher print
+Columns: NAME, CODE, SERVER, OPTION-SET, ADDRESS-POOL, VALUE, MATCHING-TYPE
+# NAME            CODE  SERVER   OPTION-SET  ADDRESS-POOL  VALUE   MATCHING-TYPE
+0 match-legacy      93  vmbr217  set-legacy  static-only   0x0000  exact
+1 match-uefi32      93  vmbr217  set-uefi32  static-only   0x0006  exact
+2 match-uefi64      93  vmbr217  set-uefi64  static-only   0x0007  exact
+3 match-uefi64-8    93  vmbr217  set-uefi64  static-only   0x0008  exact
+4 match-uefi64-9    93  vmbr217  set-uefi64  static-only   0x0009  exact
+5 match-arm64       93  vmbr217  set-arm64   static-only   0x000b  exact
+[admin@MikroTik] /ip/dhcp-server/matcher>
+
+
+
+Un ajuste importante: static-only
+
+En tu tabla aparece ADDRESS-POOL: static-only. Esto significa que el Matcher solo funcionará para equipos que ya tengan una IP reservada (Static Lease) en tu servidor DHCP.
+
+Si quieres que el PXE funcione para cualquier equipo nuevo que se conecte (lo normal para clonar equipos que aún no están en la base de datos), debemos cambiar ese valor a dhcp_pool0 (que es el pool que vimos en tu comando /ip dhcp-server print anterior) o dejarlo vacío para que no filtre por pool.
+
+Ejecuta este comando para que el matcher sea universal:
+Fragmento de código
+
+/ip dhcp-server matcher
+set [find server=vmbr217] address-pool=dhcp_pool0
+
+
+
+
+
+
+
+Comando para cambiar ip Next Server una vez creado el Network
+
+/ip dhcp-server network set [find address="172.18.10.0/24"] next-server=10.2.7.6
+
+
+
+en mi caso esto "Apuntas el boot-file-name a un archivo llamado undionly.kpxe." no funciona cuando el equipo es UEFI
+
+La solución más rápida: Usar un "Bootloader" inteligente
+
+Si te parece muy complejo configurar los matchers, la mayoría de los administradores de redes usan un solo archivo como iPXE.
+
+    Apuntas el boot-file-name a un archivo llamado undionly.kpxe.
+
+    Ese archivo es capaz de detectar la arquitectura del PC y él mismo se encarga de descargar el resto de archivos necesarios desde tu next-server.
+	
+	
