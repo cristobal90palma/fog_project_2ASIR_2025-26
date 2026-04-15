@@ -1,0 +1,1 @@
+Exportación e Importación de Imágenes capturadas con FOG.

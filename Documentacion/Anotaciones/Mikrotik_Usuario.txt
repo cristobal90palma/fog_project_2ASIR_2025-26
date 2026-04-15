@@ -1,0 +1,53 @@
+root@etherwake:~# sudo tcpdump -i eth217 -n -vv -XX udp port 9 or port 7 or ether proto 0x0842
+tcpdump: listening on eth217, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+11:01:57.496855 bc:24:11:39:11:f2 > ff:ff:ff:ff:ff:ff, ethertype Unknown (0x0842), length 116:
+        0x0000:  ffff ffff ffff bc24 1139 11f2 0842 ffff  .......$.9...B..
+        0x0010:  ffff ffff bc24 1109 e478 bc24 1109 e478  .....$...x.$...x
+        0x0020:  bc24 1109 e478 bc24 1109 e478 bc24 1109  .$...x.$...x.$..
+        0x0030:  e478 bc24 1109 e478 bc24 1109 e478 bc24  .x.$...x.$...x.$
+        0x0040:  1109 e478 bc24 1109 e478 bc24 1109 e478  ...x.$...x.$...x
+        0x0050:  bc24 1109 e478 bc24 1109 e478 bc24 1109  .$...x.$...x.$..
+        0x0060:  e478 bc24 1109 e478 bc24 1109 e478 bc24  .x.$...x.$...x.$
+        0x0070:  1109 e478                                ...x
+
+
+
+
+
+1. El misterio resuelto: ¿Por qué no se capturaba?
+
+Tu MikroTik no está enviando el WoL a través de UDP (capa 3), sino directamente como una trama de Capa 2 (Ethernet pura).
+
+    Fíjate donde dice: ethertype Unknown (0x0842).
+
+    El EtherType 0x0842 es el estándar antiguo/propio para Wake-on-LAN directo sobre Ethernet. La mayoría de los filtros de tcpdump buscan el puerto UDP 9, por eso "no existía" para tus comandos anteriores.
+	
+	
+	
+	
+	
+	/user group
+add name=wol-only policy=test,ssh,!local,!telnet,!ftp,!reboot,!read,!write,!policy,!winbox,!password,!web,!sniff,!sensitive,!api,!romon,!rest-api
+
+
+/user
+add name=usuario-wol group=wol-only password=TU_CONTRASEÑA_SEGURA
+
+
+
+/tool wol mac=BC:24:11:09:E4:78 interface=ether1
+
+
+
+Desde servidor FOG:
+
+ssh usuario-wol@10.2.7.3 "/tool wol mac=BC:24:11:09:E4:78 interface=ether1"
+Se puede usar, pero hay que poner la contraseña cada vez que se quiere usar.
+
+
+
+ssh usuario-wol@10.2.7.3 "/interface find where running=yes; :foreach i in=[/interface find where running=yes] do={ /tool wol mac=BC:24:11:09:E4:78 interface=[/interface get \$i name] }"
+
+
+
+while read mac; do ssh usuario-wol@10.2.7.3 "/tool wol mac=$mac interface=ether1"; done < macs.txt

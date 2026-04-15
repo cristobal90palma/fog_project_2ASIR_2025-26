@@ -1,0 +1,117 @@
+Todos
+
+SELECT 
+    h.hostName AS 'Nombre Host', 
+    m.hmMAC AS 'Direccion MAC', 
+    h.hostIP AS 'IP Reportada',
+    i.imageName AS 'Imagen Asignada',
+    o.osName AS 'Sistema Operativo'
+FROM hosts h
+INNER JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+LEFT JOIN images i ON h.hostImage = i.imageID
+LEFT JOIN supportedOS o ON i.imageOSID = o.osID;
+
+\\\\
+
+Filtrar por host
+
+
+SELECT h.hostName, m.hmMAC, h.hostIP, h.hostDesc
+FROM hosts h
+JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+WHERE h.hostName = 'W11-Cliente-01';
+
+
+\\\\\\\
+
+Filtrar por MAC
+
+SELECT h.hostName, m.hmMAC, h.hostIP
+FROM hosts h
+JOIN hostMAC m ON h.hostID = m.hmHostID
+WHERE m.hmMAC = 'bc:24:11:99:0a:d5';
+
+
+\\\\\\\\\\\\
+
+Consultar Hosts por Grupo
+
+SELECT 
+    g.groupName AS 'Grupo',
+    h.hostName AS 'Nombre Host', 
+    m.hmMAC AS 'MAC'
+FROM groups g
+JOIN groupMembers gm ON g.groupID = gm.gmGroupID
+JOIN hosts h ON gm.gmHostID = h.hostID
+JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+WHERE g.groupName = 'multicast_externo';
+
+
+\\\\\\\\\\\\
+
+Consultar todos los Grupos y sus integrantes
+
+SELECT 
+    g.groupName, 
+    h.hostName, 
+    m.hmMAC
+FROM groups g
+LEFT JOIN groupMembers gm ON g.groupID = gm.gmGroupID
+LEFT JOIN hosts h ON gm.gmHostID = h.hostID
+LEFT JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+ORDER BY g.groupName ASC;
+
+
+
+
+\\\\\\\\ Mostrar solo los nombres de los grupos
+
+SELECT groupName FROM groups ORDER BY groupName ASC;
+
+
+
+
+\\\\\\\ Mostrar todos los hosts con todos sus datos
+
+SELECT 
+    h.hostName AS 'Nombre del Equipo',
+    m.hmMAC AS 'Dirección MAC Principal',
+    h.hostIP AS 'IP (Cliente FOG)',
+    i.imageName AS 'Imagen Asignada',
+    o.osName AS 'Sistema Operativo',
+    h.hostCreateDate AS 'Fecha de Registro',
+    h.hostDesc AS 'Descripción'
+FROM hosts h
+LEFT JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+LEFT JOIN images i ON h.hostImage = i.imageID
+LEFT JOIN supportedOS o ON i.imageOSID = o.osID
+ORDER BY h.hostName ASC;
+
+
+
+
+SELECT 
+    m.hmMAC AS 'Dirección MAC Principal'
+FROM hosts h
+LEFT JOIN hostMAC m ON h.hostID = m.hmHostID AND m.hmPrimary = '1'
+LEFT JOIN images i ON h.hostImage = i.imageID
+LEFT JOIN supportedOS o ON i.imageOSID = o.osID
+ORDER BY h.hostName ASC;
+
+
+
+
+
+bc:24:11:99:0a:d5        
+bc:24:11:7e:02:b1        
+bc:24:11:05:1d:62        
+bc:24:11:09:f4:72        
+bc:24:11:fc:be:74        
+bc:24:11:00:6e:57        
+bc:24:11:5e:73:f2        
+bc:24:11:09:e4:78        
+bc:24:11:9b:75:a8  
+
+
+
+

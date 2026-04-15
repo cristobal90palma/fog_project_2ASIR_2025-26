@@ -20,10 +20,12 @@ Copia y pega esto para definir los archivos de arranque y el servidor FOG.
 
 /ip dhcp-server option
 add code=66 name=fog-server value="s'10.2.7.5'"
-add code=67 name=boot-legacy value="s'undionly.kpxe'"
+add code=67 name=boot-legacy value="s'undionly.kkpxe'"
 add code=67 name=boot-uefi64 value="s'snponly.efi'"
 add code=67 name=boot-uefi32 value="s'i386-efi/snponly.efi'"
 add code=67 name=boot-arm64 value="s'arm64-efi/snponly.efi'"
+add code=67 name=boot-apple value="s'snponly.efi'"
+add code=43 name=apple-bsdp value="0x0101010402800007048100052a090d8100052a08695058452d464f47"
 
 
 
@@ -37,6 +39,8 @@ add name=set-legacy options=fog-server,boot-legacy
 add name=set-uefi64 options=fog-server,boot-uefi64
 add name=set-uefi32 options=fog-server,boot-uefi32
 add name=set-arm64 options=fog-server,boot-arm64
+add name=set-surface options=fog-server,boot-uefi64
+add name=set-apple options=fog-server,boot-apple,apple-bsdp
 
 
 
@@ -49,11 +53,14 @@ Fragmento de código
 
 /ip dhcp-server matcher
 add name=match-legacy-217 code=93 value="0x0000" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-legacy
+add name=match-uefi32-alt-217 code=93 value="0x0002" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi32
 add name=match-uefi32-217 code=93 value="0x0006" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi32
 add name=match-uefi64-217 code=93 value="0x0007" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
 add name=match-uefi64-8-217 code=93 value="0x0008" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
 add name=match-uefi64-9-217 code=93 value="0x0009" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-uefi64
 add name=match-arm64-217 code=93 value="0x000b" matching-type=exact server=vmbr217 address-pool=dhcp_pool217 option-set=set-arm64
+add name=match-surface code=60 value="PXEClient:Arch:00007:UNDI:003016" matching-type=substring server=vmbr217 address-pool=dhcp_pool217 option-set=set-surface
+add name=match-apple code=60 value="AAPLBSDPC/i386" matching-type=substring server=vmbr217 address-pool=dhcp_pool217 option-set=set-apple
 
 
 Nota: En el matcher, el código 93 (arquitectura) suele enviarse como valor hexadecimal.
