@@ -1,0 +1,44 @@
+root@2asircristobal:/home/cristobal# ss -tulnp
+Netid           State            Recv-Q           Send-Q                     Local Address:Port                        Peer Address:Port           Process
+udp             UNCONN           0                0                                0.0.0.0:60259                            0.0.0.0:*              
+udp             UNCONN           0                0                                0.0.0.0:20048                            0.0.0.0:*               users:(("rpc.mountd",pid=1306,fd=4))
+udp             UNCONN           0                0                                0.0.0.0:4011                             0.0.0.0:*               users:(("dnsmasq",pid=988,fd=5))
+udp             UNCONN           0                0                                0.0.0.0:47024                            0.0.0.0:*               users:(("rsyslogd",pid=964,fd=8))
+udp             UNCONN           0                0                                0.0.0.0:55276                            0.0.0.0:*               users:(("rsyslogd",pid=964,fd=9))
+udp             UNCONN           0                0                             127.0.0.54:53                               0.0.0.0:*               users:(("systemd-resolve",pid=594,fd=16))
+udp             UNCONN           0                0                          127.0.0.53%lo:53                               0.0.0.0:*               users:(("systemd-resolve",pid=594,fd=14))
+udp             UNCONN           0                0                                0.0.0.0:67                               0.0.0.0:*               users:(("dhcpd",pid=1242,fd=7))
+udp             UNCONN           0                0                                0.0.0.0:67                               0.0.0.0:*               users:(("dnsmasq",pid=988,fd=4))
+udp             UNCONN           0                0                                0.0.0.0:69                               0.0.0.0:*               users:(("in.tftpd",pid=1452,fd=4))
+udp             UNCONN           0                0                                0.0.0.0:111                              0.0.0.0:*               users:(("rpcbind",pid=586,fd=5),("systemd",pid=1,fd=40))
+udp             UNCONN           0                0                                0.0.0.0:33057                            0.0.0.0:*               users:(("rpc.statd",pid=1310,fd=8))
+udp             UNCONN           0                0                                0.0.0.0:16777                            0.0.0.0:*               users:(("dhcpd",pid=1242,fd=20))
+udp             UNCONN           0                0                              127.0.0.1:638                              0.0.0.0:*               users:(("rpc.statd",pid=1310,fd=5))
+udp             UNCONN           0                0                                   [::]:56829                               [::]:*               users:(("dhcpd",pid=1242,fd=21))
+udp             UNCONN           0                0                                   [::]:20048                               [::]:*               users:(("rpc.mountd",pid=1306,fd=6))
+udp             UNCONN           0                0                                   [::]:59319                               [::]:*               users:(("rpc.statd",pid=1310,fd=10))
+udp             UNCONN           0                0                                   [::]:69                                  [::]:*               users:(("in.tftpd",pid=1452,fd=5))
+udp             UNCONN           0                0                                   [::]:111                                 [::]:*               users:(("rpcbind",pid=586,fd=7),("systemd",pid=1,fd=42))
+udp             UNCONN           0                0                                   [::]:33077                               [::]:*              
+tcp             LISTEN           0                80                               0.0.0.0:3306                             0.0.0.0:*               users:(("mariadbd",pid=7427,fd=25))
+tcp             LISTEN           0                4096                             0.0.0.0:33831                            0.0.0.0:*               users:(("rpc.statd",pid=1310,fd=9))
+tcp             LISTEN           0                4096                          127.0.0.54:53                               0.0.0.0:*               users:(("systemd-resolve",pid=594,fd=17))
+tcp             LISTEN           0                4096                             0.0.0.0:20048                            0.0.0.0:*               users:(("rpc.mountd",pid=1306,fd=5))
+tcp             LISTEN           0                4096                       127.0.0.53%lo:53                               0.0.0.0:*               users:(("systemd-resolve",pid=594,fd=15))
+tcp             LISTEN           0                4096                           127.0.0.1:9000                             0.0.0.0:*               users:(("php-fpm8.3",pid=1820,fd=10),("php-fpm8.3",pid=980,fd=10),("php-fpm8.3",pid=979,fd=10),("php-fpm8.3",pid=973,fd=10),("php-fpm8.3",pid=970,fd=10),("php-fpm8.3",pid=966,fd=10),("php-fpm8.3",pid=741,fd=8))
+tcp             LISTEN           0                64                               0.0.0.0:2049                             0.0.0.0:*              
+tcp             LISTEN           0                4096                             0.0.0.0:22                               0.0.0.0:*               users:(("sshd",pid=2075,fd=3),("systemd",pid=1,fd=104))
+tcp             LISTEN           0                32                               0.0.0.0:21                               0.0.0.0:*               users:(("vsftpd",pid=982,fd=3))
+tcp             LISTEN           0                4096                             0.0.0.0:111                              0.0.0.0:*               users:(("rpcbind",pid=586,fd=4),("systemd",pid=1,fd=39))
+tcp             LISTEN           0                64                               0.0.0.0:33175                            0.0.0.0:*              
+tcp             LISTEN           0                4096                           127.0.0.1:12345                            0.0.0.0:*               users:(("alloy",pid=3715,fd=3))
+tcp             LISTEN           0                80                                  [::]:3306                                [::]:*               users:(("mariadbd",pid=7427,fd=26))
+tcp             LISTEN           0                4096                                [::]:20048                               [::]:*               users:(("rpc.mountd",pid=1306,fd=7))
+tcp             LISTEN           0                64                                  [::]:38907                               [::]:*              
+tcp             LISTEN           0                64                                  [::]:2049                                [::]:*              
+tcp             LISTEN           0                4096                                [::]:22                                  [::]:*               users:(("sshd",pid=2075,fd=4),("systemd",pid=1,fd=105))
+tcp             LISTEN           0                511                                    *:80                                     *:*               users:(("apache2",pid=1810,fd=4),("apache2",pid=1579,fd=4),("apache2",pid=1567,fd=4),("apache2",pid=1566,fd=4),("apache2",pid=1560,fd=4),("apache2",pid=1556,fd=4),("apache2",pid=1453,fd=4))
+tcp             LISTEN           0                4096                                [::]:111                                 [::]:*               users:(("rpcbind",pid=586,fd=6),("systemd",pid=1,fd=41))
+tcp             LISTEN           0                511                                    *:443                                    *:*               users:(("apache2",pid=1810,fd=6),("apache2",pid=1579,fd=6),("apache2",pid=1567,fd=6),("apache2",pid=1566,fd=6),("apache2",pid=1560,fd=6),("apache2",pid=1556,fd=6),("apache2",pid=1453,fd=6))
+tcp             LISTEN           0                4096                                [::]:43269                               [::]:*               users:(("rpc.statd",pid=1310,fd=11))
+tcp             LISTEN           0                4096                                   *:9100                                   *:*       
