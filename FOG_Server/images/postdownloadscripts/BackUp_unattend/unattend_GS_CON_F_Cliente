@@ -59,12 +59,12 @@
             </OOBE>
 	
 		<FirstLogonCommands>
-		    <SynchronousCommand wcm:action="add">
-		        <Order>1</Order>
-		        <Description>Descarga, Instala FOG Client, Configura Servicio y Limpia</Description>
-		        <CommandLine>powershell -ExecutionPolicy Bypass -Command "New-Item -Path C:\fogtemp -ItemType Directory -Force; Invoke-WebRequest -Uri 'http://10.2.7.5/fog/client/download.php?newclient' -OutFile 'C:\fogtemp\fog.msi'; Start-Process msiexec.exe -ArgumentList '/i C:\fogtemp\fog.msi /quiet /qn WEBADDRESS=\"10.2.7.5\"' -Wait; Set-Service 'FOGService' -StartupType Automatic; Start-Service 'FOGService'; Remove-Item -Path 'C:\fogtemp' -Recurse -Force"</CommandLine>
-		    </SynchronousCommand>
-		</FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Description>Descarga, Instala FOG Client y Limpia</Description>
+                    <CommandLine>powershell -ExecutionPolicy Bypass -Command "New-Item -Path C:\fogtemp -ItemType Directory -Force; Invoke-WebRequest -Uri 'http://10.2.7.5/fog/client/download.php?newclient' -OutFile 'C:\fogtemp\fog.msi'; Start-Process msiexec.exe -ArgumentList '/i C:\fogtemp\fog.msi /quiet /qn WEBADDRESS=\"10.2.7.5\"' -Wait; Remove-Item -Path 'C:\fogtemp' -Recurse -Force"</CommandLine>
+                </SynchronousCommand>
+            </FirstLogonCommands>
 
         </component>
     </settings>

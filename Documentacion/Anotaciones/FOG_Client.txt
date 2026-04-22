@@ -1,0 +1,18 @@
+Usa esta guia como referencia: tiene imagenes, no como las otras:
+
+https://docs.fogproject.org/en/1.5.9/getting_started/install_fog_client.html
+
+
+
+Sobre el botón "Reset encryption data" --> Es normal, indica que funciona bien.
+
+https://forums.fogproject.org/topic/16303/reset-encryption-data/6
+https://gemini.google.com/app/cdb0b125b933eb0a
+
+Tienes capturas de imagenes (Sobre instalación manual desde el cliente).
+
+
+
+
+
+Voy a probar con el Snapin de Notepad++.exe
