@@ -1,0 +1,27 @@
+Hay que tener especial cuidado a la hora de crear las imagenes con el sysprep, porque si no, no nos funcionará
+el uso de archivos unattend.xml
+
+https://forums.fogproject.org/topic/16622/windows-10-zero-touch-deployment/5
+
+What I do is build the golden image on a VM. Then take a snapshot of the VM just before sysprepping. Run sysprep and have it power off the VM. Now the first time through this process just boot the VM back up, if it runs through OOBE/WinSetup just fine then you know you have your golden image configured correctly. If the system doesn’t run oobe correctly there is no value in capturing it with FOG. Once your golden image is perfected then you can move on to capturing with FOG. If your OOBE fails, then just reset your VM to the last snapshot. If your golden image is perfect, then again revert to the latest snapshot, run sysprep, power off, then capture with FOG.
+
+I would strongly suggest that you place your unattend.xml file in this path: C:\Windows\Panther\Unattend.xml
+Then use this command for sysprep
+c:\windows\system32\sysprep\sysprep.exe /quiet /generalize /oobe /shutdown /unattend:C:\Windows\Panther\Unattend.xml
+
+
+Al final no me hizo falta especificar el comando aquí (aunque si en las pruebas de VirtualBOX)
+Solo tuve que usar esto: c:\windows\system32\sysprep\sysprep.exe /quiet /generalize /oobe /shutdown
+
+ Corrección de unattend.xml para Windows
+
+https://gemini.google.com/app/bb0a8427b0c73a6f
+
+Solución para unattend.xml que no crea usuarios ni salta OOBE
+https://chat.deepseek.com/a/chat/s/8e65a2ad-f5ad-46a5-b569-3ffbfa864f5e
+
+
+Sobre errores de sysprep
+https://www.reddit.com/r/sysadmin/comments/1fwnnyg/windows_11_24h2_setup_error_with_sysprepd_image/
+
+https://michlstechblog.info/blog/windows-sysprep-error-machine-is-in-an-invalid-state-or-we-couldnt-update-the-recorded-state/

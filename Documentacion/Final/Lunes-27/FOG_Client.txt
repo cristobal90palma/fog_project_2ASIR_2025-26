@@ -1,0 +1,31 @@
+Usa esta guia como referencia: tiene imagenes, no como las otras:
+
+https://docs.fogproject.org/en/1.5.9/getting_started/install_fog_client.html
+
+
+
+Sobre el botón "Reset encryption data" --> Es normal, indica que funciona bien.
+
+https://forums.fogproject.org/topic/16303/reset-encryption-data/6
+https://gemini.google.com/app/cdb0b125b933eb0a
+
+Tienes capturas de imagenes (Sobre instalación manual desde el cliente).
+
+
+
+
+He probado a instalar FOG Client desde el archivo unattend.xml y funciona
+Problema: El FOG Service sigue configurado en modo automatic(delayed) y puede tardar un rato y se recomienda esperar
+o reiniciar la máquina.
+
+https://gemini.google.com/app/c518f6b2fad63b7d
+https://forums.fogproject.org/topic/8786/automate-fog-client-install/2
+@Echo Off
+start /wait msiexec.exe /i FOGService.msi /quiet USETRAY="0" WEBADDRESS="192.168.1.53"
+net stop "FogService"
+sc config "FogService" start= disabled
+
+Solucionado. Registrado en Github. Los archivos están guardados.
+
+
+

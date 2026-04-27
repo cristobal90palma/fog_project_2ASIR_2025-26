@@ -1,0 +1,11 @@
+Snapins
+
+Problemas con SYSTEM y sus limitaciones:
+https://forums.fogproject.org/topic/17753/snap-ins-lets-talk-about-them/3
+Those types of snap ins work just fine when directed appropriately because there is no user interaction. I suspect the 3rd party tool simulates the interaction via elevated credentials but those interactions will not work from the system user. I know it’s a pain, but that is one limitation of windows and system user. System user has full reign on the OS. It should be able to do these things. However, security wise, it’s a black hole in that any application or service that would run as the system user after being installed by an elevated permission, would also have full reign. So to prevent complete destruction of the OS and experience Microsoft has made it impossible to have the system user directly interact with other users profiles. I see both sides of it. There simply isn’t a way around this currently that I’m aware of.
+
+He instalado chocolatey:
+Mirar su snapin para ver como se hace.
+https://gemini.google.com/app/28a0b54345bcd93a
+
+Snapin de Notepad++ con chocolatey --> Funciona
