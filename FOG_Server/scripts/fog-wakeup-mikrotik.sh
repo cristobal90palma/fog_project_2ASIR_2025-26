@@ -25,9 +25,10 @@ fi
 MODE="$1" # El modo de selección: -h (host) o -g (grupo)
 VALUE="$2" # El nombre específico del host o grupo
 
-# Sanitización de entrada: Solo permite letras, números y caracteres básicos
-# para prevenir ataques de inyección de código o SQL.
-if [[ ! "$VALUE" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+
+# Sanitización de entrada: Permitir letras, números, puntos, guiones bajos, guiones y espacios.
+# Importante: El guion (-) debe ir al principio o al final dentro de [] para no crear rangos inválidos.
+if [[ ! "$VALUE" =~ ^[a-zA-Z0-9._[:space:]-]+$ ]]; then
     echo "Error: El nombre contiene caracteres no permitidos."
     exit 1
 fi
