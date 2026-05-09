@@ -41,6 +41,7 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 - **FOG Project (v1.5.x):** Núcleo del sistema (clonación, gestión).
 - **DNSMASQ:** ProxyDHCP para entornos con servidor DHCP preexistente.
 - **ISC DHCP Server:** Servidor DHCP para subredes gestionadas por el proyecto.
+- **ISC DHCP Relay:** Servicio Relay para que los equipos de las subredes se conecten al servidor PXE y DHCP.
 - **TFTP & NFS:** Protocolos para el arranque PXE y la transferencia de imágenes.
 - **SMCroute:** Enrutamiento estático de tráfico **Multicast** entre subredes.
 - **IGMP Proxy (MikroTik):** Alternativa para enrutamiento multicast en routers propietarios.
@@ -63,18 +64,7 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 ### Diagrama de Red Simplificado
 
-[ Internet ]
-│
-[ Proxmox01 ]
-│
-┌────────────┼────────────┐
-│ │ │
-[Subred Gestión] [R1-Ubuntu] [Router MikroTik]
-10.2.7.0/24 │ │
-│ ┌─────┼─────┐ ┌─────┼─────┐
-[Servidor FOG] │ │ │ │ │ │
-10.2.7.5 [Aula1][Aula2][Aula3] ...
-172.18.10.0/24, etc.
+[ Internet ] --> [ Proxmox01 ] --> [[Subred Gestión: 10.2.7.0/24 | [Servidor FOG]] --> [R1-Ubuntu]] O [Router MikroTik] --> [Aula1][Aula2][Aula3] ... 172.18.10.0/24, etc.
 
 
 ### Hitos Técnicos Destacados
@@ -99,18 +89,30 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 ---
 
-## ✅ Pruebas Clave Realizadas
+## ✅ Pruebas Realizadas
 
 | ID Prueba | Descripción | Estado |
 | :--- | :--- | :--- |
 | `PR-PXE-001/2` | Arranque PXE en subredes diferentes (Legacy/UEFI) | ✅ Superada |
+| `PR-PXE-003` | Configuración DNSMASQ (ProxyDHCP) en misma subred | ✅ Superada |
 | `PR-RED-001/3` | DHCP-Relay y enrutamiento en R1-Ubuntu y MikroTik | ✅ Superada |
+| `PR-RED-002/4` | Configuración de R1-Ubuntu y MikroTik como servidor DHCP | ✅ Superada |
+| `PR-RED-005` | Acceso al menú FOG mediante DHCP MikroTik | ✅ Superada |
+| `PR-REG-001/2` | Registro de hosts en el servidor (Quick y Full Registration) | ✅ Superada |
+| `PR-IMG-001` | Captura de imagen de disco desde equipo de pruebas | ✅ Superada |
+| `PR-DES-001/3` | Despliegue de imágenes (Quick Deploy y durante registro) | ✅ Superada |
+| `PR-DES-002/4` | Despliegue Unicast (subred diferente y a grupos) | ✅ Superada |
+| `PR-DES-005` | Despliegue Multicast en la misma subred del servidor | ✅ Superada |
 | `PR-DES-006` | Despliegue Multicast a equipos en tres subredes diferentes | ✅ Superada |
+| `PR-WOL-001/3` | Envío de señal WOL mediante R1-Ubuntu y Jump Box | ✅ Superada |
 | `PR-WOL-002` | Wake-on-LAN usando el router MikroTik como proxy | ✅ Superada |
-| `PR-AUT-004` | Despliegue Multicast + Postdownload + Snapins (automatización completa) | ✅ Superada |
+| `PR-SEC-001` | Auditoría de seguridad y comprobación de puertos con Nmap | ✅ Superada |
 | `PR-MON-001` | Recepción de alerta por Telegram ante caída de servicio | ✅ Superada |
+| `PR-AUT-001` | Automatización: Instalación de Snapins (Notepad++) | ✅ Superada |
+| `PR-AUT-002` | Automatización: Cambio de hostname automático vía FOG Client | ✅ Superada |
+| `PR-AUT-003` | Automatización: Uso de scripts postdownload (unattend.xml) | ✅ Superada |
+| `PR-AUT-004` | Despliegue Multicast + Postdownload + Snapins (automatización completa) | ✅ Superada |
 
-*(El listado completo de pruebas está disponible en la sección 5 de la memoria)*
 
 ---
 
@@ -118,10 +120,10 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 1.  **Requisitos previos:** Servidor Proxmox VE, red configurada con los bridges `vmbr207`, `vmbr217`, `vmbr227`, `vmbr237`.
 2.  **Crear la VM (Ubuntu Server):** Instalar con soporte LVM. Clonar este repositorio dentro de la máquina.
-3.  **Configurar IP estática y ampliar almacenamiento:** Seguir la guía de los anexos.
-4.  **Instalar FOG Project:** `cd fogproject/bin && sudo ./installfog.sh` (elegir opciones: DHCP activo, HTTPS no).
+3.  **Configurar IP estática y ampliar almacenamiento.**
+4.  **Instalar FOG Project:** `./installfog.sh` (elegir opciones: DHCP activo, HTTPS si/no).
 5.  **Configurar servicios de red:**
-    - Modificar `/etc/dhcp/dhcpd.conf` (añadir subredes 172.18.x.0/24).
+    - Configurar `/etc/dhcp/dhcpd.conf` (añadir subredes 172.18.x.0/24 y neutralizar 10.2.7.0/24).
     - Configurar `dnsmasq` como ProxyDHCP.
     - Configurar `smcroute` para Multicast y reglas `iptables` para WOL (ver scripts).
 6.  **Configurar router (R1-Ubuntu o MikroTik):**
@@ -135,7 +137,7 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 ## 📈 Líneas de Mejora Futura
 
-- **Panel Web para Wake-on-LAN (Dockerizado):** Interfaz gráfica que permita seleccionar hosts/grupos y enviar WOL desde el router MikroTik con feedback visual.
+- **Panel Web para Wake-on-LAN:** Interfaz gráfica que permita seleccionar hosts/grupos y enviar WOL desde el router MikroTik con feedback visual.
 - **HTTPS en FOG:** Migrar a certificados SSL para la interfaz web una vez se valide la compatibilidad total con todos los clientes del centro.
 - **Redundancia de almacenamiento:** Implementar cluster de Storage Nodes o replicación síncrona para alta disponibilidad.
 
@@ -143,10 +145,10 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 ## 👤 Autor
 
-- **Nombre:** [Cristóbal Suárez Abad]
+- **Nombre:** Cristóbal Suárez Abad
 - **Ciclo:** 2º ASIR (Administración de Sistemas Informáticos en Red)
 - **Centro:** I.E.S. Delgado Hernández
-- **Contacto:** [cristobal@tudominio.com / usuario de GitHub]
+
 
 ---
 
