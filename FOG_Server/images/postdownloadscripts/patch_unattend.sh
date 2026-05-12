@@ -2,13 +2,14 @@
 ## Script Pro: Fix de Montaje + Inyección
 . /usr/share/fog/lib/funcs.sh
 
-dots "Iniciando Post-Instalacion Pro"
+dots "Iniciando Post-Instalacion"
 
-# 1. Autodetección con Montaje Forzado (RW)
+# 1. Autodetección con Montaje Forzado
+# https://askubuntu.com/questions/849360/how-to-check-whether-a-partition-is-mounted-by-uuid
 osdiskpart=""
 for part in $(lsblk -lo NAME,TYPE | grep part | awk '{print $1}'); do
     mkdir /ntfs 2>/dev/null
-    # Forzamos el montaje RW eliminando el archivo de hibernación si existe
+    # Forzamos el montaje
     ntfs-3g -o remove_hiberfile,rw /dev/$part /ntfs 2>/dev/null
     
     if [[ -d "/ntfs/Windows" || -d "/ntfs/WINDOWS" ]]; then
@@ -53,6 +54,7 @@ else
 fi
 
 # 4. Registro (DevicePath)
+# https://forums.fogproject.org/topic/15049/updating-a-registry-file-after-deployment/20
 regfile="/ntfs/Windows/System32/config/SOFTWARE"
 if [ -f "$regfile" ]; then
     reged -e "$regfile" >/dev/null 2>&1 <<EOFREG
