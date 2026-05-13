@@ -91,6 +91,9 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 
 ## ✅ Pruebas Realizadas
 
+> [!TIP]
+> **[Ver lista de reproducción con las pruebas en vídeo ▶️](https://www.youtube.com/@cristobalsuarezabad6421/playlists)**
+
 | ID Prueba | Descripción | Estado |
 | :--- | :--- | :--- |
 | `PR-PXE-001/2` | Arranque PXE en subredes diferentes (Legacy/UEFI) | ✅ Superada |
