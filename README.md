@@ -92,7 +92,7 @@ El objetivo principal es diseñar e implementar una **solución centralizada, ef
 ## ✅ Pruebas Realizadas
 
 > [!TIP]
-> **[Ver lista de reproducción con las pruebas en vídeo ▶️](https://www.youtube.com/@cristobalsuarezabad6421/playlists)**
+> **[Ver lista de reproducción con las pruebas en vídeo ▶️](https://www.youtube.com/playlist?list=PLsKbqW8EAScDiYUZsXZ4cXIx2JFNvtAtZ)**
 
 | ID Prueba | Descripción | Estado |
 | :--- | :--- | :--- |
