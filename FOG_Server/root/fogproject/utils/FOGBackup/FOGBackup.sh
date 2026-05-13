@@ -90,7 +90,7 @@ backupDir="${backupDir}_$countBackup"
 [[ ! -d $backupDir/images || $backupDir/mysql || $backupDir/snapins || $backupDir/reports || $backupDir/logs ]] && mkdir -p $backupDir/{images,mysql,snapins,reports,logs} >/dev/null 2>&1
 backupDB() {
     dots "Backing up database"
-    # Use mysqldump instead of wget to avoid 401 Unauthorized errors
+    # Usamos mysqldump para evitar el error
     mysqldump -u"$snmysqluser" -p"$snmysqlpass" "$mysqldbname" > $backupDir/mysql/fog.sql 2>>$backupDir/logs/error.log
     stat=$?
     if [[ ! $stat -eq 0 ]]; then
